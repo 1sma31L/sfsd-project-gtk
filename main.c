@@ -65,6 +65,7 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_widget_set_margin_bottom(grid, 10);
     gtk_widget_set_margin_start(grid, 10);
     gtk_widget_set_margin_end(grid, 20);*/ 
+    
     gtk_container_add(GTK_CONTAINER(window), grid);
 
 // Load the CSS file
