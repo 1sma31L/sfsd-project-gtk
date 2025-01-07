@@ -191,12 +191,12 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_widget_set_margin_end(labextract_class, 20);
 
 // apply css in buttons;
-    gtk_widget_set_name(add_button, "custom-button"); 
-    gtk_widget_set_name(search_button, "custom-button"); 
-    gtk_widget_set_name(Modify_button, "custom-button"); 
-    gtk_widget_set_name(Extract_button, "custom-button"); 
-    gtk_widget_set_name(reorganize_button, "custom-button"); 
-    gtk_widget_set_name(delete_button, "custom-button"); 
+    gtk_widget_set_name(add_button, "add_button"); 
+    gtk_widget_set_name(search_button, "search_button"); 
+    gtk_widget_set_name(Modify_button, "Modify_button"); 
+    gtk_widget_set_name(Extract_button, "Extract_button"); 
+    gtk_widget_set_name(reorganize_button, "reorganize_button"); 
+    gtk_widget_set_name(delete_button, "delete_button"); 
 // Set the horizontal alignment of the label to the start of the cell
     gtk_widget_set_halign(labid, GTK_ALIGN_START);
     gtk_widget_set_halign(labname, GTK_ALIGN_START);
