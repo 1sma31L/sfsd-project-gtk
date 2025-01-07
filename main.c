@@ -1,37 +1,8 @@
 #include "functions.h"
 #include <gtk/gtk.h>
 
-void open_message_window(GtkWidget *parent, const char *message) {
-    // Create a new top-level window
-    GtkWidget *message_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title(GTK_WINDOW(message_window), "Error Message");
-    gtk_window_set_default_size(GTK_WINDOW(message_window), 300, 150);
-
-    // Set the window's transient property to the parent (optional)
-    gtk_window_set_transient_for(GTK_WINDOW(message_window), GTK_WINDOW(parent));
-    gtk_window_set_modal(GTK_WINDOW(message_window), TRUE);
-
-    // Create a label with the error message
-    GtkWidget *label = gtk_label_new(message);
-
-    // Center the label in the window
-    gtk_widget_set_halign(label, GTK_ALIGN_CENTER);
-    gtk_widget_set_valign(label, GTK_ALIGN_CENTER);
-
-    // Add the label to the window
-    gtk_container_add(GTK_CONTAINER(message_window), label);
-
-    // Show all widgets in the new window
-    gtk_widget_show_all(message_window);
-
-    // Connect the delete event to destroy the window when closed
-    g_signal_connect(message_window, "delete-event", G_CALLBACK(gtk_widget_destroy), NULL);
-}
-
 static void add_student_clicked(GtkButton *button, gpointer user_data)
 {
-    FILE *file = fopen(FILE_NAME, "a+");
-
     // Retrieve the user data (entry_widgets) passed in
     GtkWidget **widgets = (GtkWidget **)user_data;
 
@@ -53,54 +24,62 @@ static void add_student_clicked(GtkButton *button, gpointer user_data)
     student.average = grade_average(student.grades);
 
     student.deleted = 0;
-    //check the id uniqueness;
-    int idExists = 0;
-    do{
-        idExists = 0;
+   // Check for ID uniqueness in the file
     FILE *readFile = fopen(FILE_NAME, "r");
     if (!readFile)
     {
-      open_message_window(widgets[8], "Error opening file for ID verification");
-      fclose(file);
-      return;
+        // If the file does not exist, proceed with adding the student
+        GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "Error: Could not open file!");
+        gtk_dialog_run(GTK_DIALOG(dialog));
+        gtk_widget_destroy(dialog);
+        return;
     }
 
+    int idExists = 0;
     char buffer[256];
     while (fgets(buffer, sizeof(buffer), readFile))
     {
-      int existingID;
-
-      // Parse the line to extract the ID
-      if (sscanf(buffer, "%d;%*[^\n]", &existingID) == 1)
-      {
-        if (existingID == student.id)
+        int existingID;
+        // Parse the line to extract the ID
+        if (sscanf(buffer, "%d;%*[^\n]", &existingID) == 1)
         {
-          idExists = 1;
-          open_message_window(widgets[8], "Error: Student ID already exists.");
-          break;
+            if (existingID == student.id)
+            {
+                // ID already exists, show error message
+                idExists = 1;
+                break;
+            }
         }
-      }
     }
     fclose(readFile);
-  } while (idExists);
 
+    if (idExists)
+    {
+        GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "Error: Student ID already exists!");
+        gtk_dialog_run(GTK_DIALOG(dialog));
+        gtk_widget_destroy(dialog);
+        return; // Exit if the ID already exists
+    }
+  
     // write in the file;
+    FILE *writefile = fopen(FILE_NAME, "a+");
 
-    fprintf(file, "%d;%s;%d;%s;", student.id, student.name, student.birthYear, student.class);
+    fprintf(writefile, "%d;%s;%d;%s;", student.id, student.name, student.birthYear, student.class);
     for (int i = 0; i < NUM_MODULES; i++)
     {
-        fprintf(file, "%.2f,%d;", student.grades[i], MODULE_COEFFICIENTS[i]);
+        fprintf(writefile, "%.2f,%d;", student.grades[i], MODULE_COEFFICIENTS[i]);
     }
-    fprintf(file, "%.2f;%d\n", student.average, student.deleted);
+    fprintf(writefile, "%.2f;%d\n", student.average, student.deleted);
 
-    fclose(file);
+    fclose(writefile);
+    GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "Student added successfully!");
+    gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy(dialog);
 }
 
 static void activate(GtkApplication *app, gpointer user_data)
 {
     GtkWidget *window;
-    GtkWidget *parent_window ;
-
     GtkWidget *grid, *button, *add_modify_box, *search_delete_box, *extract_box, *reorganize_box;
     GtkWidget *search_button, *add_button, *Modify_button, *Extract_button, *reorganize_button, *delete_button;
     // creat a programme window;
@@ -143,9 +122,8 @@ static void activate(GtkApplication *app, gpointer user_data)
 
     // creat the boxes;
     GtkWidget *title_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 20);
-    GtkWidget *label = gtk_label_new("Welcome To SMS");
+    GtkWidget *label = gtk_label_new("Welcome To SMS-APP");
     gtk_container_add(GTK_CONTAINER(title_box), label);
-    gtk_widget_set_margin_start(title_box, 800);
 
     /// the first box:
     add_modify_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 20);
@@ -307,7 +285,6 @@ static void activate(GtkApplication *app, gpointer user_data)
     widgets[5] = GTK_WIDGET(oop);
     widgets[6] = GTK_WIDGET(analysis);
     widgets[7] = GTK_WIDGET(algebra);
-    widgets[8] = GTK_WIDGET(parent_window);
 
     // Connect buttons to callback functions;
 
