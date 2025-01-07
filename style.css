@@ -10,9 +10,10 @@ grid {
     background-color: #ffffff;
 }
 
+
 /* Button styling */
-button {
-    background-color: #4CAF50;
+butnto {
+    background-color: #c68cf6;
     color: white;
     border-radius: 5px;
     padding: 15px;
@@ -21,11 +22,11 @@ button {
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #b19ef4;
 }
 
 button:active {
-    background-color: #3e8e41;
+    background-color: #c69dff;
 }
 
 /* Label styling */
@@ -70,6 +71,4 @@ entry, spin-button {
 }
 
 /* Widget Alignment */
-align-start {
-    align: start;
-}
+
