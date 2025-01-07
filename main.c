@@ -68,6 +68,8 @@ static void activate(GtkApplication *app, gpointer user_data)
 
     // creat the boxes;
 
+    
+
     /// the first box:
     add_modify_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 30);
     GtkWidget *grid1 = gtk_grid_new();
