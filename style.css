@@ -1,81 +1,37 @@
-/* General styling for the window */
+/* style.css */
+
 window {
 	background-color: #f0f0f0;
-	color: #333;
-	font-family: "Arial", sans-serif;
-}
-
-/* Title Bar */
-#title_box {
-	font-size: 24px;
-	font-weight: bold;
-	text-align: center;
-	margin-bottom: 20px;
-}
-
-/* Grid Styling */
-grid {
 	padding: 20px;
 }
 
-/* Box Styling */
-box {
-	background-color: #ffffff;
-	border-radius: 10px;
-	padding: 20px;
-	margin-bottom: 20px;
-	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Button Styling */
 button {
-	background-color: #007bff;
+	background-color: #4caf50;
 	color: white;
-	font-size: 16px;
-	padding: 15px 25px;
 	border: none;
+	padding: 10px 20px;
+	margin: 10px;
 	border-radius: 5px;
 	cursor: pointer;
-	transition: background-color 0.3s;
 }
 
 button:hover {
-	background-color: #0056b3;
+	background-color: #45a049;
 }
 
-button:active {
-	background-color: #004080;
-}
-
-/* Input Fields Styling */
 entry,
-spin-button {
-	font-size: 16px;
-	padding: 10px;
+spinbutton {
+	padding: 8px;
+	margin: 10px;
 	border: 1px solid #ccc;
 	border-radius: 5px;
-	width: 200px;
-	margin-bottom: 10px;
 }
 
-/* Labels Styling */
 label {
 	font-weight: bold;
-	font-size: 14px;
-	margin-bottom: 5px;
 }
 
-/* Margins between widgets */
-.grid-row-spacing {
-	margin-bottom: 15px;
-}
-
-/* Styling the search, delete, and other buttons in the specific boxes */
-#add_button,
-#modify_button,
-#search_button,
-#delete_button,
-#extract_button,
-#reorganize_button {
-	margin-right: 20px;
+.grid {
+	background-color: white;
+	padding: 10px;
 }
