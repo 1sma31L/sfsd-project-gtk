@@ -39,6 +39,7 @@ static void add_student_clicked(GtkButton *button, gpointer user_data)
     fclose(file);
 }
 
+
 static void activate(GtkApplication *app, gpointer user_data)
 {
     GtkWidget *window;
@@ -65,6 +66,20 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_widget_set_margin_start(grid, 30);
     gtk_widget_set_margin_end(grid, 30);
     gtk_container_add(GTK_CONTAINER(window), grid);
+
+// Load the CSS file
+    GtkCssProvider *css_provider = gtk_css_provider_new();
+    GError *error = NULL;
+    if (!gtk_css_provider_load_from_path(css_provider, "style.css", &error)) {
+        g_warning("Failed to load CSS: %s", error->message);
+        g_clear_error(&error);
+    } else {
+        gtk_style_context_add_provider_for_screen(gdk_screen_get_default(),
+                                                  GTK_STYLE_PROVIDER(css_provider),
+                                                  GTK_STYLE_PROVIDER_PRIORITY_USER);
+    }
+
+
 
     // creat the boxes;
     GtkWidget *title_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 20);
@@ -95,7 +110,7 @@ static void activate(GtkApplication *app, gpointer user_data)
     reorganize_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 
     // add the boxes to the main grid
-    gtk_grid_attach(GTK_GRID(grid), title_box, 0, 0, 3, 2);
+    gtk_grid_attach(GTK_GRID(grid), title_box, 0, 0, 3, 1);
     gtk_grid_attach(GTK_GRID(grid), add_modify_box, 0, 1, 3, 2);
     gtk_grid_attach(GTK_GRID(grid), search_delete_box, 0, 3, 3, 2);
     gtk_grid_attach(GTK_GRID(grid), extract_box, 0, 5, 3, 1);
@@ -190,7 +205,14 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_grid_attach(GTK_GRID(grid3), labextract_class, 1, 0, 1, 1);
     gtk_widget_set_margin_end(labextract_class, 20);
 
-    // Set the horizontal alignment of the label to the start of the cell
+// apply css in buttons;
+    gtk_widget_set_name(add_button, "add_button"); 
+    gtk_widget_set_name(search_button, "search_button"); 
+    gtk_widget_set_name(Modify_button, "Modify_button"); 
+    gtk_widget_set_name(Extract_button, "Extract_button"); 
+    gtk_widget_set_name(reorganize_button, "reorganize_button"); 
+    gtk_widget_set_name(delete_button, "delete_button"); 
+// Set the horizontal alignment of the label to the start of the cell
     gtk_widget_set_halign(labid, GTK_ALIGN_START);
     gtk_widget_set_halign(labname, GTK_ALIGN_START);
     gtk_widget_set_halign(labyear, GTK_ALIGN_START);
