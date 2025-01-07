@@ -60,10 +60,10 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_window_set_default_size(GTK_WINDOW(window), screen_width * 0.8, screen_height * 0.8); // 80% of screen size
     // creat a grid;
     grid = gtk_grid_new();
-    gtk_widget_set_margin_top(grid, 10);
+    /*gtk_widget_set_margin_top(grid, 10);
     gtk_widget_set_margin_bottom(grid, 10);
     gtk_widget_set_margin_start(grid, 10);
-    gtk_widget_set_margin_end(grid, 20);*/ 
+    gtk_widget_set_margin_end(grid, 20); */
     
     gtk_container_add(GTK_CONTAINER(window), grid);
 
