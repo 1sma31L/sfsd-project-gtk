@@ -12,7 +12,6 @@
 #include <ctype.h>
 #include "functions.h"
 
-
 #define FILE_NAME "ENSTA_Students.txt"
 #define NUM_MODULES 4
 #define MAX_NAME_LENGTH 40
