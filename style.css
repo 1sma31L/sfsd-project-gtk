@@ -71,5 +71,13 @@ spin-button {
 	background-color: #e68900;
 }
 
+#delete-button {
+    background-color: #d7bdff;
+}
+
+#delete-button:hover {
+    background-color: #d797ff;
+}
+
 /* Widget Alignment */
 
