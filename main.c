@@ -1,6 +1,123 @@
 #include "functions.h"
 #include <gtk/gtk.h>
 
+static void reorganize_clicked(GtkButton *button, gpointer user_data){
+  FILE *f = fopen(FILE_NAME, "r");
+
+  if (!f)
+  {
+    GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "Error: Could not open file!");
+    gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy(dialog);
+    return;
+  }
+
+  FILE *tmp = fopen("tmp.txt", "w");
+
+  if (!tmp)
+  {
+    GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "Error: Could not open temp file!");
+    gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy(dialog);
+    fclose(tmp);
+    return;
+  }
+
+  char StudentInfo[120];
+  while (fgets(StudentInfo, sizeof(StudentInfo), f))
+  {
+    if (StudentInfo[strlen(StudentInfo) - 2] == '0')
+    {
+
+      fputs(StudentInfo, tmp);
+    }
+  }
+  fclose(f);
+  fclose(tmp);
+  if (remove(FILE_NAME) != 0)
+  {
+    GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "Error: couldn't delete the file");
+    gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy(dialog);
+      }
+  if (rename("tmp.txt", FILE_NAME) != 0)
+  {
+    GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "Error renaming the temporary file");
+    gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy(dialog);
+  }
+  else
+  {
+    GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "Reorganization and deletion completed successfully.");
+    gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy(dialog);
+  }
+  return;
+}
+
+static void search_student_clicked(GtkButton *button, gpointer user_data) {
+    // Get the GtkSpinButton widget (passed as user_data)
+    GtkWidget *widget8 = GTK_WIDGET(user_data);
+
+    // Retrieve the entered ID
+    int id = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widget8));
+
+    // Check if the student exists
+    ENSTA_Student *found_student = student_exists(id);
+    if (!found_student) {
+        // Show an error dialog if the student ID does not exist
+        GtkWidget *dialog = gtk_message_dialog_new(NULL,
+                                                   GTK_DIALOG_MODAL,
+                                                   GTK_MESSAGE_ERROR,
+                                                   GTK_BUTTONS_OK,
+                                                   "Error: Student ID %d does not exist!", id);
+        gtk_dialog_run(GTK_DIALOG(dialog));
+        gtk_widget_destroy(dialog);
+        return;
+    }
+
+    // Prepare a buffer to store the student's data
+    char info[1024]; // Adjust size as needed to fit all the data
+
+    // Format the student details into the buffer
+    snprintf(info, sizeof(info),
+             "ID: %d\n"
+             "Name: %s\n"
+             "Birth Year: %d\n"
+             "Class: %s\n",
+             found_student->id,
+             found_student->name,
+             found_student->birthYear,
+             found_student->class);
+
+    // Append module data to the buffer
+    for (int i = 0; i < 4; i++) {
+        char module_info[128];
+        snprintf(module_info, sizeof(module_info),
+                 "Module: %s\nNote: %.2f (Coefficient: %d)\n",
+                 MODULE_NAMES[i], found_student->grades[i], MODULE_COEFFICIENTS[i]);
+        strncat(info, module_info, sizeof(info) - strlen(info) - 1);
+    }
+
+    // Append the average to the buffer
+    char average_info[64];
+    snprintf(average_info, sizeof(average_info), "Average: %.2f\n", found_student->average);
+    strncat(info, average_info, sizeof(info) - strlen(info) - 1);
+
+    // Create a message dialog to display the student information
+    GtkWidget *dialog = gtk_message_dialog_new(NULL,
+                                               GTK_DIALOG_MODAL,
+                                               GTK_MESSAGE_INFO,
+                                               GTK_BUTTONS_OK,
+                                               "%s", info);
+
+    // Show the dialog and wait for the user to respond
+    gtk_dialog_run(GTK_DIALOG(dialog));
+
+    // Destroy the dialog after it is closed
+    gtk_widget_destroy(dialog);
+}
+
 static void add_student_clicked(GtkButton *button, gpointer user_data)
 {
     // Retrieve the user data (entry_widgets) passed in
@@ -24,6 +141,19 @@ static void add_student_clicked(GtkButton *button, gpointer user_data)
     student.average = grade_average(student.grades);
 
     student.deleted = 0;
+    uppercase(student.class);
+    if (student.name[0]=='\0'){
+        GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "Error:Enter the Full name");
+        gtk_dialog_run(GTK_DIALOG(dialog));
+        gtk_widget_destroy(dialog);
+        return;
+    }
+      if (student.class[0]=='\0'){
+        GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "Error:Enter the class");
+        gtk_dialog_run(GTK_DIALOG(dialog));
+        gtk_widget_destroy(dialog);
+        return;
+    }
    // Check for ID uniqueness in the file
     FILE *readFile = fopen(FILE_NAME, "r");
     if (!readFile)
@@ -58,7 +188,7 @@ static void add_student_clicked(GtkButton *button, gpointer user_data)
         GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "Error: Student ID already exists!");
         gtk_dialog_run(GTK_DIALOG(dialog));
         gtk_widget_destroy(dialog);
-        return; // Exit if the ID already exists
+        return; 
     }
   
     // write in the file;
@@ -195,10 +325,10 @@ static void activate(GtkApplication *app, gpointer user_data)
     GtkWidget *full_name = gtk_entry_new();
     GtkWidget *birth_year = gtk_spin_button_new_with_range(1990, 2020, 1);
     GtkWidget *classe = gtk_entry_new();
-    GtkWidget *sfsd = gtk_spin_button_new_with_range(0.0, 20.0, 0.5);
-    GtkWidget *oop = gtk_spin_button_new_with_range(0.0, 20.0, 0.5);
-    GtkWidget *analysis = gtk_spin_button_new_with_range(0.0, 20.0, 0.5);
-    GtkWidget *algebra = gtk_spin_button_new_with_range(0.0, 20.0, 0.5);
+    GtkWidget *sfsd = gtk_spin_button_new_with_range(0, 20.0, 0.5);
+    GtkWidget *oop = gtk_spin_button_new_with_range(0, 20.0, 0.5);
+    GtkWidget *analysis = gtk_spin_button_new_with_range(0, 20.0, 0.5);
+    GtkWidget *algebra = gtk_spin_button_new_with_range(0, 20.0, 0.5);
     gtk_grid_attach(GTK_GRID(grid1), id, 2, 0, 1, 1);
     gtk_grid_attach(GTK_GRID(grid1), full_name, 4, 0, 1, 1);
     gtk_grid_attach(GTK_GRID(grid1), birth_year, 6, 0, 1, 1);
@@ -297,10 +427,13 @@ static void activate(GtkApplication *app, gpointer user_data)
     widgets[5] = GTK_WIDGET(oop);
     widgets[6] = GTK_WIDGET(analysis);
     widgets[7] = GTK_WIDGET(algebra);
-
+    widgets[8] = GTK_WIDGET(search_delete_id);
     // Connect buttons to callback functions;
 
     g_signal_connect(add_button, "clicked", G_CALLBACK(add_student_clicked), widgets);
+    g_signal_connect(search_button, "clicked", G_CALLBACK(search_student_clicked), widgets[8]);
+    g_signal_connect(reorganize_button, "clicked", G_CALLBACK(reorganize_clicked),NULL);
+
 
     gtk_widget_show_all(window);
 }
