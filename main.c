@@ -60,7 +60,7 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_window_set_default_size(GTK_WINDOW(window), screen_width * 0.8, screen_height * 0.8); // 80% of screen size
     // creat a grid;
     grid = gtk_grid_new();
-    /*gtk_widget_set_margin_top(grid, 10);
+    /* gtk_widget_set_margin_top(grid, 10);
     gtk_widget_set_margin_bottom(grid, 10);
     gtk_widget_set_margin_start(grid, 10);
     gtk_widget_set_margin_end(grid, 20); */
@@ -227,6 +227,18 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_widget_set_name(search_delete_id, "search_delete_id");
     gtk_widget_set_name(extract_class, "extract_class");
 
+    // NEW NEW ONES
+    gtk_widget_set_name(labid, "labid");
+    gtk_widget_set_name(labname, "labname");
+    gtk_widget_set_name(labyear, "labyear");
+    gtk_widget_set_name(labclass, "labclass");
+    gtk_widget_set_name(labesfsd, "labesfsd");
+    gtk_widget_set_name(labeoop, "labeoop");
+    gtk_widget_set_name(labeanalyse, "labeanalyse");
+    gtk_widget_set_name(labalgebra, "labalgebra");
+    gtk_widget_set_name(labsearch_delete_id, "labsearch_delete_id");
+    gtk_widget_set_name(labextract_class, "labextract_class");
+    gtk_widget_set_name(label, "label");
     // Set the horizontal alignment of the label to the start of the cell
     gtk_widget_set_halign(labid, GTK_ALIGN_START);
     gtk_widget_set_halign(labname, GTK_ALIGN_START);
