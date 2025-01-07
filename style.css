@@ -1,6 +1,6 @@
 /* Window styling */
 window {
-	background-color: #f0f0f0;
+	background-color: #ff0000;
 	padding: 20px;
 }
 
@@ -10,23 +10,22 @@ grid {
 	background-color: #ffffff;
 }
 
-
 /* Button styling */
 butnto {
-    background-color: #c68cf6;
-    color: white;
-    border-radius: 5px;
-    padding: 15px;
-    font-size: 16px;
-    border: none;
+	background-color: #c68cf6;
+	color: white;
+	border-radius: 5px;
+	padding: 15px;
+	font-size: 16px;
+	border: none;
 }
 
 button:hover {
-    background-color: #b19ef4;
+	background-color: #b19ef4;
 }
 
 button:active {
-    background-color: #c69dff;
+	background-color: #c69dff;
 }
 
 /* Label styling */
@@ -72,12 +71,11 @@ spin-button {
 }
 
 #delete-button {
-    background-color: #d7bdff;
+	background-color: #d7bdff;
 }
 
 #delete-button:hover {
-    background-color: #d797ff;
+	background-color: #d797ff;
 }
 
 /* Widget Alignment */
-
