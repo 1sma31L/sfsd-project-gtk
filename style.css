@@ -1,0 +1,75 @@
+/* Window styling */
+window {
+    background-color: #f0f0f0;
+    padding: 20px;
+}
+
+/* General grid styling */
+grid {
+    padding: 10px;
+    background-color: #ffffff;
+}
+
+/* Button styling */
+button {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    padding: 15px;
+    font-size: 16px;
+    border: none;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button:active {
+    background-color: #3e8e41;
+}
+
+/* Label styling */
+label {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+/* Entry and SpinButton styling */
+entry, spin-button {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+/* Specific widget styling */
+#add-button {
+    background-color: #008CBA;
+}
+
+#add-button:hover {
+    background-color: #007B9A;
+}
+
+#modify-button {
+    background-color: #f44336;
+}
+
+#modify-button:hover {
+    background-color: #e32e2b;
+}
+
+#search-button {
+    background-color: #ff9800;
+}
+
+#search-button:hover {
+    background-color: #e68900;
+}
+
+/* Widget Alignment */
+align-start {
+    align: start;
+}
