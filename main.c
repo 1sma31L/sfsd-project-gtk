@@ -13,7 +13,6 @@ static void add_student_clicked(GtkButton *button, gpointer user_data)
 
     student.id = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widgets[0]));
     strncpy(student.name, gtk_entry_get_text(GTK_ENTRY(widgets[1])), sizeof(student.name) - 1);
-    
     student.name[sizeof(student.name) - 1] = '\0';
     student.birthYear = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widgets[2]));
     strncpy(student.class, gtk_entry_get_text(GTK_ENTRY(widgets[3])), sizeof(student.class) - 1);

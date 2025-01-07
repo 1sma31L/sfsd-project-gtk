@@ -18,15 +18,14 @@ const int MODULE_COEFFICIENTS[] = {4, 3, 5, 2};
 // Structure for student details
 typedef struct
 {
-    int id;
-    char name[MAX_NAME_LENGTH];
-    int birthYear;
-    char class[3];
-    float grades[NUM_MODULES];
-    float average;
-    bool deleted;
+  int id;
+  char name[MAX_NAME_LENGTH];
+  int birthYear;
+  char class[3];
+  float grades[NUM_MODULES];
+  float average;
+  bool deleted;
 } ENSTA_Student;
-
 
 void add_student();
 void modify_student();
