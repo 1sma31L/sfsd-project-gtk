@@ -39,6 +39,7 @@ static void add_student_clicked(GtkButton *button, gpointer user_data)
     fclose(file);
 }
 
+
 static void activate(GtkApplication *app, gpointer user_data)
 {
     GtkWidget *window;
@@ -65,6 +66,20 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_widget_set_margin_start(grid, 30);
     gtk_widget_set_margin_end(grid, 30);
     gtk_container_add(GTK_CONTAINER(window), grid);
+
+// Load the CSS file
+    GtkCssProvider *css_provider = gtk_css_provider_new();
+    GError *error = NULL;
+    if (!gtk_css_provider_load_from_path(css_provider, "style.css", &error)) {
+        g_warning("Failed to load CSS: %s", error->message);
+        g_clear_error(&error);
+    } else {
+        gtk_style_context_add_provider_for_screen(gdk_screen_get_default(),
+                                                  GTK_STYLE_PROVIDER(css_provider),
+                                                  GTK_STYLE_PROVIDER_PRIORITY_USER);
+    }
+
+
 
     // creat the boxes;
     GtkWidget *title_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 20);
