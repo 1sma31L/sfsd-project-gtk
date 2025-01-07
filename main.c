@@ -85,6 +85,8 @@ static void activate(GtkApplication *app, gpointer user_data)
     GtkWidget *title_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 20);
     GtkWidget *label = gtk_label_new("Welcome To SMS");
     gtk_container_add(GTK_CONTAINER(title_box), label);
+    gtk_widget_set_margin_start(title_box, 800);
+
     /// the first box:
     add_modify_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 20);
     GtkWidget *grid1 = gtk_grid_new();
@@ -135,7 +137,7 @@ static void activate(GtkApplication *app, gpointer user_data)
     // add margine between the boxes;
     gtk_widget_set_margin_top(search_delete_box, 100);
     gtk_widget_set_margin_top(extract_box, 100);
-    gtk_widget_set_margin_top(reorganize_box, 100);
+    gtk_widget_set_margin_top(reorganize_box, 50);
 
     // buttons resize;
     gtk_widget_set_size_request(add_button, 100, 70);
