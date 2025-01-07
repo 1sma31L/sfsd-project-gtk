@@ -206,9 +206,9 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_widget_set_margin_end(labextract_class, 20);
 
 // apply css in buttons;
-    gtk_widget_set_name(add_button, "add_button"); 
-    gtk_widget_set_name(search_button, "search_button"); 
-    gtk_widget_set_name(Modify_button, "Modify_button"); 
+    gtk_widget_set_name(add_button,"add_button"); 
+    gtk_widget_set_name(search_button,"search_button"); 
+    gtk_widget_set_name(Modify_button,"Modify_button"); 
     gtk_widget_set_name(Extract_button, "Extract_button"); 
     gtk_widget_set_name(reorganize_button, "reorganize_button"); 
     gtk_widget_set_name(delete_button, "delete_button"); 
