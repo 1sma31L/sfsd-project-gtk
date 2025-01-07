@@ -1,6 +1,23 @@
 #include <gtk/gtk.h>
 #include "functions.h"
+void load_css(const char *css_file_path) {
+    GtkCssProvider *css_provider = gtk_css_provider_new();
+    GError *error = NULL;
 
+    // Load the CSS file
+    gtk_css_provider_load_from_path(css_provider, css_file_path, &error);
+    if (error) {
+        g_printerr("Error loading CSS file: %s\n", error->message);
+        g_error_free(error);
+        return;
+    }
+
+    // Apply the CSS to the default display
+    GdkDisplay *display = gdk_display_get_default();
+    gtk_style_context_add_provider_for_display(display, GTK_STYLE_PROVIDER(css_provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
+
+    g_object_unref(css_provider);
+}
 static void add_student_clicked(GtkButton *button, gpointer user_data)
 {
     FILE *file = fopen(FILE_NAME, "a+");
@@ -13,7 +30,6 @@ static void add_student_clicked(GtkButton *button, gpointer user_data)
 
     student.id = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widgets[0]));
     strncpy(student.name, gtk_entry_get_text(GTK_ENTRY(widgets[1])), sizeof(student.name) - 1);
-    
     student.name[sizeof(student.name) - 1] = '\0';
     student.birthYear = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widgets[2]));
     strncpy(student.class, gtk_entry_get_text(GTK_ENTRY(widgets[3])), sizeof(student.class) - 1);
@@ -40,6 +56,7 @@ static void add_student_clicked(GtkButton *button, gpointer user_data)
     fclose(file);
 }
 
+
 static void activate(GtkApplication *app, gpointer user_data)
 {
     GtkWidget *window;
@@ -57,6 +74,20 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_widget_set_margin_start(grid, 30);
     gtk_widget_set_margin_end(grid, 30);
     gtk_container_add(GTK_CONTAINER(window), grid);
+
+// Load the CSS file
+    GtkCssProvider *css_provider = gtk_css_provider_new();
+    GError *error = NULL;
+    if (!gtk_css_provider_load_from_path(css_provider, "style.css", &error)) {
+        g_warning("Failed to load CSS: %s", error->message);
+        g_clear_error(&error);
+    } else {
+        gtk_style_context_add_provider_for_screen(gdk_screen_get_default(),
+                                                  GTK_STYLE_PROVIDER(css_provider),
+                                                  GTK_STYLE_PROVIDER_PRIORITY_USER);
+    }
+
+
 
     // creat the boxes;
 
@@ -85,7 +116,7 @@ static void activate(GtkApplication *app, gpointer user_data)
     reorganize_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 
     // add the boxes to the main grid
-    gtk_grid_attach(GTK_GRID(grid), title_box, 0, 0, 3, 2);
+  
     gtk_grid_attach(GTK_GRID(grid), add_modify_box, 0, 1, 3, 2);
     gtk_grid_attach(GTK_GRID(grid), search_delete_box, 0, 3, 3, 2);
     gtk_grid_attach(GTK_GRID(grid), extract_box, 0, 5, 3, 1);
