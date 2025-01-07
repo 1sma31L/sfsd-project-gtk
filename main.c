@@ -61,10 +61,10 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_window_set_default_size(GTK_WINDOW(window), screen_width * 0.8, screen_height * 0.8); // 80% of screen size
     // creat a grid;
     grid = gtk_grid_new();
-    gtk_widget_set_margin_top(grid, 40);
-    gtk_widget_set_margin_bottom(grid, 40);
-    gtk_widget_set_margin_start(grid, 30);
-    gtk_widget_set_margin_end(grid, 30);
+    gtk_widget_set_margin_top(grid, 10);
+    gtk_widget_set_margin_bottom(grid, 10);
+    gtk_widget_set_margin_start(grid, 10);
+    gtk_widget_set_margin_end(grid, 20);
     gtk_container_add(GTK_CONTAINER(window), grid);
 
 // Load the CSS file
@@ -110,7 +110,7 @@ static void activate(GtkApplication *app, gpointer user_data)
     reorganize_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 
     // add the boxes to the main grid
-  
+    gtk_grid_attach(GTK_GRID(grid), title_box, 0, 0, 3, 1);
     gtk_grid_attach(GTK_GRID(grid), add_modify_box, 0, 1, 3, 2);
     gtk_grid_attach(GTK_GRID(grid), search_delete_box, 0, 3, 3, 2);
     gtk_grid_attach(GTK_GRID(grid), extract_box, 0, 5, 3, 1);
@@ -206,12 +206,12 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_widget_set_margin_end(labextract_class, 20);
 
 // apply css in buttons;
-    gtk_widget_set_name(add_button, "custom-button"); 
-    gtk_widget_set_name(search_button, "custom-button"); 
-    gtk_widget_set_name(Modify_button, "custom-button"); 
-    gtk_widget_set_name(Extract_button, "custom-button"); 
-    gtk_widget_set_name(reorganize_button, "custom-button"); 
-    gtk_widget_set_name(delete_button, "custom-button"); 
+    gtk_widget_set_name(add_button,"add_button"); 
+    gtk_widget_set_name(search_button,"search_button"); 
+    gtk_widget_set_name(Modify_button,"Modify_button"); 
+    gtk_widget_set_name(Extract_button, "Extract_button"); 
+    gtk_widget_set_name(reorganize_button, "reorganize_button"); 
+    gtk_widget_set_name(delete_button, "delete_button"); 
 // Set the horizontal alignment of the label to the start of the cell
     gtk_widget_set_halign(labid, GTK_ALIGN_START);
     gtk_widget_set_halign(labname, GTK_ALIGN_START);
