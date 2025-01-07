@@ -1,6 +1,7 @@
 #include "functions.h"
 #include <gtk/gtk.h>
 
+
 static void add_student_clicked(GtkButton *button, gpointer user_data) {
     FILE *file = fopen(FILE_NAME, "a+");
 
