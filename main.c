@@ -1,6 +1,33 @@
 #include "functions.h"
 #include <gtk/gtk.h>
 
+void open_message_window(GtkWidget *parent, const char *message) {
+    // Create a new top-level window
+    GtkWidget *message_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(message_window), "Error Message");
+    gtk_window_set_default_size(GTK_WINDOW(message_window), 300, 150);
+
+    // Set the window's transient property to the parent (optional)
+    gtk_window_set_transient_for(GTK_WINDOW(message_window), GTK_WINDOW(parent));
+    gtk_window_set_modal(GTK_WINDOW(message_window), TRUE);
+
+    // Create a label with the error message
+    GtkWidget *label = gtk_label_new(message);
+
+    // Center the label in the window
+    gtk_widget_set_halign(label, GTK_ALIGN_CENTER);
+    gtk_widget_set_valign(label, GTK_ALIGN_CENTER);
+
+    // Add the label to the window
+    gtk_container_add(GTK_CONTAINER(message_window), label);
+
+    // Show all widgets in the new window
+    gtk_widget_show_all(message_window);
+
+    // Connect the delete event to destroy the window when closed
+    g_signal_connect(message_window, "delete-event", G_CALLBACK(gtk_widget_destroy), NULL);
+}
+
 static void add_student_clicked(GtkButton *button, gpointer user_data)
 {
     FILE *file = fopen(FILE_NAME, "a+");
@@ -8,9 +35,9 @@ static void add_student_clicked(GtkButton *button, gpointer user_data)
     // Retrieve the user data (entry_widgets) passed in
     GtkWidget **widgets = (GtkWidget **)user_data;
 
+
     // Retrieve the values;
     ENSTA_Student student;
-
     student.id = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widgets[0]));
     strncpy(student.name, gtk_entry_get_text(GTK_ENTRY(widgets[1])), sizeof(student.name) - 1);
     student.name[sizeof(student.name) - 1] = '\0';
@@ -26,8 +53,38 @@ static void add_student_clicked(GtkButton *button, gpointer user_data)
     student.average = grade_average(student.grades);
 
     student.deleted = 0;
+    //check the id uniqueness;
+    int idExists = 0;
+    do{
+        idExists = 0;
+    FILE *readFile = fopen(FILE_NAME, "r");
+    if (!readFile)
+    {
+      open_message_window(widgets[8], "Error opening file for ID verification");
+      fclose(file);
+      return;
+    }
 
-    // write in the fucking file;
+    char buffer[256];
+    while (fgets(buffer, sizeof(buffer), readFile))
+    {
+      int existingID;
+
+      // Parse the line to extract the ID
+      if (sscanf(buffer, "%d;%*[^\n]", &existingID) == 1)
+      {
+        if (existingID == student.id)
+        {
+          idExists = 1;
+          open_message_window(widgets[8], "Error: Student ID already exists.");
+          break;
+        }
+      }
+    }
+    fclose(readFile);
+  } while (idExists);
+
+    // write in the file;
 
     fprintf(file, "%d;%s;%d;%s;", student.id, student.name, student.birthYear, student.class);
     for (int i = 0; i < NUM_MODULES; i++)
@@ -42,6 +99,8 @@ static void add_student_clicked(GtkButton *button, gpointer user_data)
 static void activate(GtkApplication *app, gpointer user_data)
 {
     GtkWidget *window;
+    GtkWidget *parent_window ;
+
     GtkWidget *grid, *button, *add_modify_box, *search_delete_box, *extract_box, *reorganize_box;
     GtkWidget *search_button, *add_button, *Modify_button, *Extract_button, *reorganize_button, *delete_button;
     // creat a programme window;
@@ -251,7 +310,7 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_widget_set_halign(labsearch_delete_id, GTK_ALIGN_START);
     gtk_widget_set_halign(labextract_class, GTK_ALIGN_START);
 
-    GtkWidget **widgets = malloc(8 * sizeof(GtkWidget *));
+    GtkWidget **widgets = malloc(9 * sizeof(GtkWidget *));
     widgets[0] = GTK_WIDGET(id);
     widgets[1] = GTK_WIDGET(full_name);
     widgets[2] = GTK_WIDGET(birth_year);
@@ -260,6 +319,7 @@ static void activate(GtkApplication *app, gpointer user_data)
     widgets[5] = GTK_WIDGET(oop);
     widgets[6] = GTK_WIDGET(analysis);
     widgets[7] = GTK_WIDGET(algebra);
+    widgets[8] = GTK_WIDGET(parent_window);
 
     // Connect buttons to callback functions;
 
