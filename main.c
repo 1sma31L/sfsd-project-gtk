@@ -1,23 +1,6 @@
-#include <gtk/gtk.h>
 #include "functions.h"
-void load_css(const char *css_file_path) {
-    GtkCssProvider *css_provider = gtk_css_provider_new();
-    GError *error = NULL;
+#include <gtk/gtk.h>
 
-    // Load the CSS file
-    gtk_css_provider_load_from_path(css_provider, css_file_path, &error);
-    if (error) {
-        g_printerr("Error loading CSS file: %s\n", error->message);
-        g_error_free(error);
-        return;
-    }
-
-    // Apply the CSS to the default display
-    GdkDisplay *display = gdk_display_get_default();
-    gtk_style_context_add_provider_for_display(display, GTK_STYLE_PROVIDER(css_provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
-
-    g_object_unref(css_provider);
-}
 static void add_student_clicked(GtkButton *button, gpointer user_data)
 {
     FILE *file = fopen(FILE_NAME, "a+");
@@ -66,7 +49,16 @@ static void activate(GtkApplication *app, gpointer user_data)
     window = gtk_application_window_new(app);
     gtk_window_set_title(GTK_WINDOW(window), "STUDENT MANAGEMENT SYSTEM");
     gtk_window_set_default_size(GTK_WINDOW(window), 1000, 800);
+    // Get screen dimensions using the newer GdkDisplay API
+    GdkDisplay *display = gdk_display_get_default();
+    GdkMonitor *monitor = gdk_display_get_primary_monitor(display); // Primary monitor
+    GdkRectangle monitor_geometry;
+    gdk_monitor_get_geometry(monitor, &monitor_geometry);
+    gint screen_width = monitor_geometry.width;
+    gint screen_height = monitor_geometry.height;
 
+    // Set the window size to adapt to screen size
+    gtk_window_set_default_size(GTK_WINDOW(window), screen_width * 0.8, screen_height * 0.8); // 80% of screen size
     // creat a grid;
     grid = gtk_grid_new();
     gtk_widget_set_margin_top(grid, 40);
@@ -90,27 +82,29 @@ static void activate(GtkApplication *app, gpointer user_data)
 
 
     // creat the boxes;
-
+    GtkWidget *title_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 20);
+    GtkWidget *label = gtk_label_new("Welcome To SMS");
+    gtk_container_add(GTK_CONTAINER(title_box), label);
     /// the first box:
-    add_modify_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 30);
+    add_modify_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 20);
     GtkWidget *grid1 = gtk_grid_new();
     gtk_container_add(GTK_CONTAINER(add_modify_box), grid1);
     gtk_grid_set_row_spacing(GTK_GRID(grid1), 20);
-    gtk_grid_set_column_spacing(GTK_GRID(grid1), 50);
+    gtk_grid_set_column_spacing(GTK_GRID(grid1), 30);
 
     /// the second box
-    search_delete_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 30);
+    search_delete_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 20);
     GtkWidget *grid2 = gtk_grid_new();
     gtk_container_add(GTK_CONTAINER(search_delete_box), grid2);
     gtk_grid_set_row_spacing(GTK_GRID(grid2), 20);
-    gtk_grid_set_column_spacing(GTK_GRID(grid2), 50);
+    gtk_grid_set_column_spacing(GTK_GRID(grid2), 30);
 
     /// the third box
     extract_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     GtkWidget *grid3 = gtk_grid_new();
     gtk_container_add(GTK_CONTAINER(extract_box), grid3);
     gtk_grid_set_row_spacing(GTK_GRID(grid3), 20);
-    gtk_grid_set_column_spacing(GTK_GRID(grid3), 50);
+    gtk_grid_set_column_spacing(GTK_GRID(grid3), 30);
 
     /// the fourth box
     reorganize_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
@@ -211,7 +205,14 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_grid_attach(GTK_GRID(grid3), labextract_class, 1, 0, 1, 1);
     gtk_widget_set_margin_end(labextract_class, 20);
 
-    // Set the horizontal alignment of the label to the start of the cell
+// apply css in buttons;
+    gtk_widget_set_name(add_button, "custom-button"); 
+    gtk_widget_set_name(search_button, "custom-button"); 
+    gtk_widget_set_name(Modify_button, "custom-button"); 
+    gtk_widget_set_name(Extract_button, "custom-button"); 
+    gtk_widget_set_name(reorganize_button, "custom-button"); 
+    gtk_widget_set_name(delete_button, "custom-button"); 
+// Set the horizontal alignment of the label to the start of the cell
     gtk_widget_set_halign(labid, GTK_ALIGN_START);
     gtk_widget_set_halign(labname, GTK_ALIGN_START);
     gtk_widget_set_halign(labyear, GTK_ALIGN_START);
@@ -237,7 +238,6 @@ static void activate(GtkApplication *app, gpointer user_data)
 
     g_signal_connect(add_button, "clicked", G_CALLBACK(add_student_clicked), widgets);
 
-    gtk_window_maximize(GTK_WINDOW(window));
     gtk_widget_show_all(window);
 }
 
