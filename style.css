@@ -11,7 +11,7 @@ window {
 
 /* Grid Styling */
 grid {
-	padding: 20px;
+	/* padding: 20px; */
 	background-color:#00203F ;
 	border-radius: 10px;
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
@@ -27,7 +27,7 @@ button:hover {
 	margin-bottom: 20px;
 	margin-left: 200px ;
 	color: #ADEFD1;
-margin-left: 80px;
+    margin-left: 80px;
 }
 button {
 	border: none;
@@ -40,7 +40,7 @@ button {
 }
 
 #labid, #labname, #labyear, #labclass, #labesfsd, #labeoop, #labeanalyse, #labalgebra, #labsearch_delete_id, #labextract_class {
-	font-size: 20px;
+	font-size: 15px;
 	color: #F9EBDE;
 	margin-bottom: 10px;
 }
