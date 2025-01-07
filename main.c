@@ -1,5 +1,5 @@
-#include <gtk/gtk.h>
 #include "functions.h"
+#include <gtk/gtk.h>
 
 static void add_student_clicked(GtkButton *button, gpointer user_data)
 {
@@ -67,33 +67,35 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_container_add(GTK_CONTAINER(window), grid);
 
     // creat the boxes;
-
+    GtkWidget *title_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 20);
+    GtkWidget *label = gtk_label_new("Welcome To SMS");
+    gtk_container_add(GTK_CONTAINER(title_box), label);
     /// the first box:
-    add_modify_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 30);
+    add_modify_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 20);
     GtkWidget *grid1 = gtk_grid_new();
     gtk_container_add(GTK_CONTAINER(add_modify_box), grid1);
     gtk_grid_set_row_spacing(GTK_GRID(grid1), 20);
-    gtk_grid_set_column_spacing(GTK_GRID(grid1), 50);
+    gtk_grid_set_column_spacing(GTK_GRID(grid1), 30);
 
     /// the second box
-    search_delete_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 30);
+    search_delete_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 20);
     GtkWidget *grid2 = gtk_grid_new();
     gtk_container_add(GTK_CONTAINER(search_delete_box), grid2);
     gtk_grid_set_row_spacing(GTK_GRID(grid2), 20);
-    gtk_grid_set_column_spacing(GTK_GRID(grid2), 50);
+    gtk_grid_set_column_spacing(GTK_GRID(grid2), 30);
 
     /// the third box
     extract_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
     GtkWidget *grid3 = gtk_grid_new();
     gtk_container_add(GTK_CONTAINER(extract_box), grid3);
     gtk_grid_set_row_spacing(GTK_GRID(grid3), 20);
-    gtk_grid_set_column_spacing(GTK_GRID(grid3), 50);
+    gtk_grid_set_column_spacing(GTK_GRID(grid3), 30);
 
     /// the fourth box
     reorganize_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
 
     // add the boxes to the main grid
-    // gtk_grid_attach(GTK_GRID(grid), title_box, 0, 0, 3, 2);
+    gtk_grid_attach(GTK_GRID(grid), title_box, 0, 0, 3, 2);
     gtk_grid_attach(GTK_GRID(grid), add_modify_box, 0, 1, 3, 2);
     gtk_grid_attach(GTK_GRID(grid), search_delete_box, 0, 3, 3, 2);
     gtk_grid_attach(GTK_GRID(grid), extract_box, 0, 5, 3, 1);
