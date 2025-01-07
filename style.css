@@ -4,6 +4,8 @@ window {
 	padding: 20px;
 }
 
+.delete_button {
+}
 /* General grid styling */
 grid {
 	padding: 10px;

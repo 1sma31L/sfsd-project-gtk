@@ -64,7 +64,7 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_widget_set_margin_bottom(grid, 10);
     gtk_widget_set_margin_start(grid, 10);
     gtk_widget_set_margin_end(grid, 20); */
-    
+
     gtk_container_add(GTK_CONTAINER(window), grid);
 
     // Load the CSS file
@@ -171,7 +171,7 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_grid_attach(GTK_GRID(grid1), analysis, 6, 1, 1, 1);
     gtk_grid_attach(GTK_GRID(grid1), algebra, 8, 1, 1, 1);
 
-    // add entries and spins of search_delete_box ;
+    // a entries and spins of search_delete_box ;
 
     GtkWidget *search_delete_id = gtk_spin_button_new_with_range(0, G_MAXDOUBLE, 1);
     gtk_grid_attach(GTK_GRID(grid2), search_delete_id, 3, 1, 2, 1);
@@ -215,6 +215,18 @@ static void activate(GtkApplication *app, gpointer user_data)
     gtk_widget_set_name(Extract_button, "Extract_button");
     gtk_widget_set_name(reorganize_button, "reorganize_button");
     gtk_widget_set_name(delete_button, "delete_button");
+    // NEW ONES
+    gtk_widget_set_name(id, "id");
+    gtk_widget_set_name(full_name, "full_name");
+    gtk_widget_set_name(birth_year, "birth_year");
+    gtk_widget_set_name(classe, "classe");
+    gtk_widget_set_name(sfsd, "sfsd");
+    gtk_widget_set_name(oop, "oop");
+    gtk_widget_set_name(analysis, "analysis");
+    gtk_widget_set_name(algebra, "algebra");
+    gtk_widget_set_name(search_delete_id, "search_delete_id");
+    gtk_widget_set_name(extract_class, "extract_class");
+
     // Set the horizontal alignment of the label to the start of the cell
     gtk_widget_set_halign(labid, GTK_ALIGN_START);
     gtk_widget_set_halign(labname, GTK_ALIGN_START);
