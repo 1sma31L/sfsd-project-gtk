@@ -58,7 +58,7 @@ static void activate(GtkApplication *app, gpointer user_data) {
     gtk_widget_set_margin_end(grid, 30);
     gtk_container_add(GTK_CONTAINER(window), grid);
 
-    // creat the boxes;
+    // creat the boxes
 
 /// the first box:
     add_modify_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 30);
