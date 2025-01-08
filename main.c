@@ -634,7 +634,6 @@ static void activate(GtkApplication *app, gpointer user_data)
   gtk_container_add(GTK_CONTAINER(window), grid);
 
   GtkCssProvider *provider = gtk_css_provider_new();
-  GdkDisplay *display = gdk_display_get_default();
   GdkScreen *screen = gdk_display_get_default_screen(display);
 
   gtk_style_context_add_provider_for_screen(
@@ -647,7 +646,7 @@ static void activate(GtkApplication *app, gpointer user_data)
 
   // creat the boxes;
   GtkWidget *title_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 20);
-  GtkWidget *label = gtk_label_new("Welcome To SMS-APP");
+  GtkWidget *label = gtk_label_new("Student Managment System");
   gtk_container_add(GTK_CONTAINER(title_box), label);
 
   /// the first box:
@@ -682,12 +681,12 @@ static void activate(GtkApplication *app, gpointer user_data)
   gtk_grid_attach(GTK_GRID(grid), reorganize_box, 0, 6, 3, 1);
 
   // Create buttons for each operation
-  add_button = gtk_button_new_with_label("Add Student");
-  search_button = gtk_button_new_with_label("Search Student");
-  Modify_button = gtk_button_new_with_label("Modify Student");
-  Extract_button = gtk_button_new_with_label("Extract by Class");
-  reorganize_button = gtk_button_new_with_label("Reorganize File");
-  delete_button = gtk_button_new_with_label("Delete Student");
+  add_button = gtk_button_new_with_label("Add Student  ➕");
+  search_button = gtk_button_new_with_label("Search Student  🔍");
+  Modify_button = gtk_button_new_with_label("Modify Student  ✍️");
+  Extract_button = gtk_button_new_with_label("Extract by Class  📤");
+  reorganize_button = gtk_button_new_with_label("Reorganize File  🗄️");
+  delete_button = gtk_button_new_with_label("Delete Student  🚮");
 
   // add buttons to the boxes;
   gtk_grid_attach(GTK_GRID(grid1), add_button, 0, 0, 1, 1);
@@ -724,6 +723,13 @@ static void activate(GtkApplication *app, gpointer user_data)
   GtkWidget *oop = gtk_spin_button_new_with_range(0, 20.0, 0.5);
   GtkWidget *analysis = gtk_spin_button_new_with_range(0, 20.0, 0.5);
   GtkWidget *algebra = gtk_spin_button_new_with_range(0, 20.0, 0.5);
+
+  gtk_spin_button_set_value(GTK_SPIN_BUTTON(birth_year), 2005);
+  gtk_spin_button_set_value(GTK_SPIN_BUTTON(sfsd), 10.0);
+  gtk_spin_button_set_value(GTK_SPIN_BUTTON(oop), 10.0);
+  gtk_spin_button_set_value(GTK_SPIN_BUTTON(analysis), 10.0);
+  gtk_spin_button_set_value(GTK_SPIN_BUTTON(algebra), 10.0);
+
   gtk_grid_attach(GTK_GRID(grid1), id, 2, 0, 1, 1);
   gtk_grid_attach(GTK_GRID(grid1), full_name, 4, 0, 1, 1);
   gtk_grid_attach(GTK_GRID(grid1), birth_year, 6, 0, 1, 1);
@@ -746,16 +752,16 @@ static void activate(GtkApplication *app, gpointer user_data)
   gtk_widget_set_size_request(sfsd, 100, 70); // the remining entries oop analysis algebra follow the sfsd entry size;
 
   // buttons labels:
-  GtkWidget *labid = gtk_label_new("Enter an unique ID:");
-  GtkWidget *labname = gtk_label_new("Enter the Full Name:");
-  GtkWidget *labyear = gtk_label_new("Enter the Birth Year:");
-  GtkWidget *labclass = gtk_label_new("Enter the Class:");
-  GtkWidget *labesfsd = gtk_label_new("Enter the SFSD Grade:");
-  GtkWidget *labeoop = gtk_label_new("Enter the OOP Grade:");
-  GtkWidget *labeanalyse = gtk_label_new("Enter the Analysis Grade:");
-  GtkWidget *labalgebra = gtk_label_new("Enter the Algebra Grade:");
-  GtkWidget *labsearch_delete_id = gtk_label_new("Enter the ID:");
-  GtkWidget *labextract_class = gtk_label_new("Enter the Class:");
+  GtkWidget *labid = gtk_label_new("ID:");
+  GtkWidget *labname = gtk_label_new("Full Name:");
+  GtkWidget *labyear = gtk_label_new("Birth Year:");
+  GtkWidget *labclass = gtk_label_new("Class:");
+  GtkWidget *labesfsd = gtk_label_new("SFSD Grade:");
+  GtkWidget *labeoop = gtk_label_new("OOP Grade:");
+  GtkWidget *labeanalyse = gtk_label_new("Analysis Grade:");
+  GtkWidget *labalgebra = gtk_label_new("Algebra Grade:");
+  GtkWidget *labsearch_delete_id = gtk_label_new("ID:");
+  GtkWidget *labextract_class = gtk_label_new("Class:");
 
   gtk_grid_attach(GTK_GRID(grid1), labid, 1, 0, 1, 1);
   gtk_grid_attach(GTK_GRID(grid1), labname, 3, 0, 1, 1);
@@ -780,14 +786,17 @@ static void activate(GtkApplication *app, gpointer user_data)
   // NEW ONES
   gtk_widget_set_name(id, "id");
   gtk_widget_set_name(full_name, "full_name");
+  gtk_entry_set_placeholder_text(GTK_ENTRY(full_name), "John Doe");
   gtk_widget_set_name(birth_year, "birth_year");
   gtk_widget_set_name(classe, "classe");
+  gtk_entry_set_placeholder_text(GTK_ENTRY(classe), "A1");
   gtk_widget_set_name(sfsd, "sfsd");
   gtk_widget_set_name(oop, "oop");
   gtk_widget_set_name(analysis, "analysis");
   gtk_widget_set_name(algebra, "algebra");
   gtk_widget_set_name(search_delete_id, "search_delete_id");
   gtk_widget_set_name(extract_class, "extract_class");
+  gtk_entry_set_placeholder_text(GTK_ENTRY(extract_class), "A1");
 
   // NEW NEW ONES
   gtk_widget_set_name(labid, "labid");

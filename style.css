@@ -52,26 +52,64 @@ button:disabled {
 	background: #f5efff;
 }
 
-#Modify_button,
-#search_button,
-#Extract_button,
 #reorganize_button {
 	color: #fff;
 	background: #a294f9;
 }
 
-#delete_button {
-	background: #e64b47;
+#add_button {
+	background: #22c55e;
 	color: white;
 }
 
-#add_button {
-	background: #43a047;
+#add_button:hover {
+	background: #16a34a;
+}
+
+#search_button {
+	background: #27272a;
 	color: white;
+}
+
+#search_button:hover {
+	background: #18181b;
+}
+
+#delete_button {
+	background: #ef4444;
+	color: white;
+}
+
+#delete_button:hover {
+	background: #dc2626;
+}
+
+#Modify_button {
+	background: #3b82f6;
+	color: white;
+}
+
+#Modify_button:hover {
+	background: #2563eb;
+}
+
+#Extract_button {
+	background: #8b5cf6;
+	color: white;
+}
+
+#Extract_button:hover {
+	background: #7c3aed;
 }
 
 #reorganize_button {
+	background: #f97316;
+	color: white;
 	margin-left: 10px;
+}
+
+#reorganize_button:hover {
+	background: #ea580c;
 }
 
 #labid,
@@ -85,4 +123,11 @@ button:disabled {
 #labsearch_delete_id,
 #labextract_class {
 	color: #333;
+	font-weight: bold;
+	font-size: 18px;
+}
+#extract_class,
+#search_delete_id {
+	border-color: #a294f9;
+	background: white;
 }
