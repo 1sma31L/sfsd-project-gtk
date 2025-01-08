@@ -56,7 +56,7 @@ static void ok_clicked(GtkButton *button, gpointer user_data) {
     if (students[i].id == id && students[i].deleted == 0)
     {
       
-      strncpy(students[i].name, modified_student.name, sizeof(students[i].name) - 1);
+    strncpy(students[i].name, modified_student.name, sizeof(students[i].name) - 1);
     students[i].name[sizeof(students[i].name)] = '\0';
 
     strncpy(students[i].class, modified_student.class, sizeof(students[i].class) - 1);
@@ -838,11 +838,6 @@ static void activate(GtkApplication *app, gpointer user_data)
     g_signal_connect(reorganize_button, "clicked", G_CALLBACK(reorganize_clicked),NULL);
     g_signal_connect(Extract_button, "clicked", G_CALLBACK(extract_clicked),widgets[9]);
     g_signal_connect(Modify_button, "clicked", G_CALLBACK(modify_clicked),widgets[8]);
-
-  
-
-
-
 
   gtk_widget_show_all(window);
 }
