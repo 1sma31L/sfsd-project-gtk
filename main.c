@@ -633,20 +633,17 @@ static void activate(GtkApplication *app, gpointer user_data)
 
   gtk_container_add(GTK_CONTAINER(window), grid);
 
-  // Load the CSS file
-  GtkCssProvider *css_provider = gtk_css_provider_new();
-  GError *error = NULL;
-  if (!gtk_css_provider_load_from_path(css_provider, "style.css", &error))
-  {
-    g_warning("Failed to load CSS: %s", error->message);
-    g_clear_error(&error);
-  }
-  else
-  {
-    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(),
-                                              GTK_STYLE_PROVIDER(css_provider),
-                                              GTK_STYLE_PROVIDER_PRIORITY_USER);
-  }
+  GtkCssProvider *provider = gtk_css_provider_new();
+  GdkDisplay *display = gdk_display_get_default();
+  GdkScreen *screen = gdk_display_get_default_screen(display);
+
+  gtk_style_context_add_provider_for_screen(
+      screen,
+      GTK_STYLE_PROVIDER(provider),
+      GTK_STYLE_PROVIDER_PRIORITY_USER);
+
+  gtk_css_provider_load_from_path(provider, "style.css", NULL);
+  g_object_unref(provider);
 
   // creat the boxes;
   GtkWidget *title_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 20);
