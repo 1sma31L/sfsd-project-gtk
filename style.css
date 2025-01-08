@@ -66,7 +66,7 @@ button:disabled {
 }
 
 #add_button {
-	background: #22c55e;
+	background: #8b5cf6;
 	color: white;
 }
 
@@ -75,7 +75,7 @@ button:disabled {
 }
 
 #search_button {
-	background: #27272a;
+	background: #8b5cf6;
 	color: white;
 }
 
@@ -84,7 +84,7 @@ button:disabled {
 }
 
 #delete_button {
-	background: #ef4444;
+	background: #8b5cf6;
 	color: white;
 }
 
@@ -93,7 +93,7 @@ button:disabled {
 }
 
 #Modify_button {
-	background: #3b82f6;
+	background: #8b5cf6;
 	color: white;
 }
 
@@ -111,7 +111,7 @@ button:disabled {
 }
 
 #reorganize_button {
-	background: #f97316;
+	background: #8b5cf6;
 	color: white;
 	margin-left: 10px;
 }
