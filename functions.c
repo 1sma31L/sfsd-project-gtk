@@ -411,7 +411,7 @@ void modify_student()
   fclose(file);
 }
 
-//delete_student bug fixed
+// delete_student bug fixed
 void delete_student()
 {
   FILE *file = fopen(FILE_NAME, "r+");
