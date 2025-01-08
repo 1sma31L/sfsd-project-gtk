@@ -61,6 +61,11 @@ static void reorganize_clicked(GtkButton *button, gpointer user_data)
   return;
 }
 
+/**
+ * @brief Search for a student by ID and display their information.
+ * @param button
+ * @param user_data
+ */
 static void search_student_clicked(GtkButton *button, gpointer user_data)
 {
   // Get the GtkSpinButton widget (passed as user_data)
@@ -127,6 +132,11 @@ static void search_student_clicked(GtkButton *button, gpointer user_data)
   gtk_widget_destroy(dialog);
 }
 
+/**
+ * @brief Add a new student to the file.
+ * @param button
+ * @param user_data
+ */
 static void add_student_clicked(GtkButton *button, gpointer user_data)
 {
   // Retrieve the user data (entry_widgets) passed in
@@ -217,6 +227,11 @@ static void add_student_clicked(GtkButton *button, gpointer user_data)
   gtk_widget_destroy(dialog);
 }
 
+/**
+ * @brief Activate the application and create the main window.
+ * @param app
+ * @param user_data
+ */
 static void activate(GtkApplication *app, gpointer user_data)
 {
   GtkWidget *window;
