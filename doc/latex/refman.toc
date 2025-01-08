@@ -1,0 +1,34 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\contentsline {chapter}{\numberline {1}Class Documentation}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}ENSTA\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Student Struct Reference}{1}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Detailed Description}{1}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Member Data Documentation}{1}{subsection.1.1.2}%
+\contentsline {subsubsection}{\numberline {1.1.2.1}average}{1}{subsubsection.1.1.2.1}%
+\contentsline {subsubsection}{\numberline {1.1.2.2}birthYear}{1}{subsubsection.1.1.2.2}%
+\contentsline {subsubsection}{\numberline {1.1.2.3}class}{1}{subsubsection.1.1.2.3}%
+\contentsline {subsubsection}{\numberline {1.1.2.4}deleted}{2}{subsubsection.1.1.2.4}%
+\contentsline {subsubsection}{\numberline {1.1.2.5}grades}{2}{subsubsection.1.1.2.5}%
+\contentsline {subsubsection}{\numberline {1.1.2.6}id}{2}{subsubsection.1.1.2.6}%
+\contentsline {subsubsection}{\numberline {1.1.2.7}name}{2}{subsubsection.1.1.2.7}%
+\contentsline {chapter}{\numberline {2}File Documentation}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}functions.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}c File Reference}{3}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Detailed Description}{4}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Macro Definition Documentation}{4}{subsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.2.1}FILE\_NAME}{4}{subsubsection.2.1.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.2.2}MAX\_NAME\_LENGTH}{4}{subsubsection.2.1.2.2}%
+\contentsline {subsubsection}{\numberline {2.1.2.3}NUM\_MODULES}{4}{subsubsection.2.1.2.3}%
+\contentsline {subsection}{\numberline {2.1.3}Function Documentation}{5}{subsection.2.1.3}%
+\contentsline {subsubsection}{\numberline {2.1.3.1}add\_student()}{5}{subsubsection.2.1.3.1}%
+\contentsline {subsubsection}{\numberline {2.1.3.2}delete\_student()}{5}{subsubsection.2.1.3.2}%
+\contentsline {subsubsection}{\numberline {2.1.3.3}extract\_by\_class()}{5}{subsubsection.2.1.3.3}%
+\contentsline {subsubsection}{\numberline {2.1.3.4}grade\_average()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{5}{subsubsection.2.1.3.4}%
+\contentsline {subsubsection}{\numberline {2.1.3.5}grade\_average()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{6}{subsubsection.2.1.3.5}%
+\contentsline {subsubsection}{\numberline {2.1.3.6}main()}{6}{subsubsection.2.1.3.6}%
+\contentsline {subsubsection}{\numberline {2.1.3.7}modify\_student()}{6}{subsubsection.2.1.3.7}%
+\contentsline {subsubsection}{\numberline {2.1.3.8}reorganize\_file()}{6}{subsubsection.2.1.3.8}%
+\contentsline {subsubsection}{\numberline {2.1.3.9}search\_student()}{6}{subsubsection.2.1.3.9}%
+\contentsline {subsubsection}{\numberline {2.1.3.10}student\_exists()}{6}{subsubsection.2.1.3.10}%
+\contentsline {subsubsection}{\numberline {2.1.3.11}uppercase()}{7}{subsubsection.2.1.3.11}%
+\contentsline {subsection}{\numberline {2.1.4}Variable Documentation}{7}{subsection.2.1.4}%
+\contentsline {subsubsection}{\numberline {2.1.4.1}MODULE\_COEFFICIENTS}{7}{subsubsection.2.1.4.1}%
+\contentsline {subsubsection}{\numberline {2.1.4.2}MODULE\_NAMES}{7}{subsubsection.2.1.4.2}%
