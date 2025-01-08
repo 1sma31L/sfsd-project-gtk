@@ -11,7 +11,7 @@ window {
 
 /* Grid Styling */
 grid {
-	/* padding: 20px; */
+	padding: 10px; 
 	background-color:#00203F ;
 	border-radius: 10px;
 	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
@@ -28,6 +28,7 @@ button:hover {
 	margin-left: 750px ;
 	color: #ADEFD1;
 }
+
 button {
 	border: none;
 	border-radius: 8px;
