@@ -52,6 +52,9 @@ static void ok_clicked(GtkButton *button, gpointer user_data)
   {
     if (students[i].id == id && students[i].deleted == 0)
     {
+      
+    strncpy(students[i].name, modified_student.name, sizeof(students[i].name) - 1);
+    students[i].name[sizeof(students[i].name)] = '\0';
 
       strncpy(students[i].name, modified_student.name, sizeof(students[i].name) - 1);
       students[i].name[sizeof(students[i].name)] = '\0';
@@ -614,6 +617,7 @@ static void activate(GtkApplication *app, gpointer user_data)
   window = gtk_application_window_new(app);
   gtk_window_set_title(GTK_WINDOW(window), "STUDENT MANAGEMENT SYSTEM");
   gtk_window_set_default_size(GTK_WINDOW(window), 1000, 800);
+
   // Get screen dimensions using the newer GdkDisplay API
   GdkDisplay *display = gdk_display_get_default();
   GdkMonitor *monitor = gdk_display_get_primary_monitor(display); // Primary monitor
@@ -830,6 +834,13 @@ static void activate(GtkApplication *app, gpointer user_data)
   widgets[8] = GTK_WIDGET(search_delete_id);
   widgets[9] = GTK_WIDGET(extract_class);
   // Connect buttons to callback functions;
+
+    g_signal_connect(add_button, "clicked", G_CALLBACK(add_student_clicked), widgets);
+    g_signal_connect(search_button, "clicked", G_CALLBACK(search_student_clicked), widgets[8]);
+    g_signal_connect(delete_button, "clicked", G_CALLBACK(delete_clicked),widgets[8]);
+    g_signal_connect(reorganize_button, "clicked", G_CALLBACK(reorganize_clicked),NULL);
+    g_signal_connect(Extract_button, "clicked", G_CALLBACK(extract_clicked),widgets[9]);
+    g_signal_connect(Modify_button, "clicked", G_CALLBACK(modify_clicked),widgets[8]);
 
   g_signal_connect(add_button, "clicked", G_CALLBACK(add_student_clicked), widgets);
   g_signal_connect(search_button, "clicked", G_CALLBACK(search_student_clicked), widgets[8]);
