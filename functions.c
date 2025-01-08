@@ -411,6 +411,7 @@ void modify_student()
   fclose(file);
 }
 
+// delete_student bug fixed
 void delete_student()
 {
   FILE *file = fopen(FILE_NAME, "r+");
@@ -485,14 +486,6 @@ void delete_student()
   }
 
   fclose(file);
-}
-
-void uppercase(char class[3])
-{
-  for (int i = 0; class[i] != '\0'; i++)
-  {
-    class[i] = toupper(class[i]);
-  }
 }
 
 void extract_by_class()

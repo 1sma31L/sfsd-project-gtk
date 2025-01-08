@@ -1,55 +1,142 @@
-/* Window styling */
-
-
-/* General Window Styling */
-window {
-	background-color: #ADEFD1;
-	padding: 20px;
-	font-family: 'Roboto', sans-serif;
-	color: #ffffff;
-}
-
-/* Grid Styling */
 grid {
-	padding: 10px; 
-	background-color:#00305f ;
-	border-radius: 10px;
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-}
-button:hover {
-	background-color:  #ffffff;
-	box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
-}
-/* Main Title Label */
-
-#label{
-	font-size: 40px;
-	margin-bottom: 20px;
-	margin-left: 750px ;
-	color: #ADEFD1;
-	font-weight: 600;
-}
-button {
-	border: none;
-	border-radius: 8px;
-	font-size: 20px;
-	color: #00203F;
-	background-color:  #ADEFD1;
-	padding: 10px 20px;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-#add_button, #Modify_button, #search_button, #Extract_button, #reorganize_button, #delete_button {
-	font-size: 20px;
-	color: rgba(0, 0, 0, 0.9);
-	margin-bottom: 10px;
-	font-weight: 600;
+	padding: 10px;
+	background-color: #f5efff;
 }
 
-#labid, #labname, #labyear, #labclass, #labesfsd, #labeoop, #labeanalyse, #labalgebra, #labsearch_delete_id, #labextract_class {
-	font-size: 15px;
-	color: #F9EBDE;
-	margin-bottom: 10px;
+#label {
+	margin-left: 650px;
+	margin-top: 10px;
+	font-size: 50px;
+	color: #333;
 	font-weight: bold;
 }
 
+button {
+	border: none;
+	font-size: 20px;
+	color: #6551e0;
+	background-color: #e5d9f2;
+	padding: 10px 20px;
+}
 
+button:hover {
+	background-color: #a294f9;
+	box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+#id,
+#full_name,
+#birth_year,
+#classe,
+#sfsd,
+#oop,
+#algebra,
+#analysis,
+#search_delete_student,
+#extract_student {
+	border-color: #a294f9;
+	background: white;
+}
+
+button:hover {
+	box-shadow: none;
+	color: #333;
+}
+
+button:disabled {
+	background: #f5efff;
+}
+
+#add_button,
+#search_button,
+#delete_button,
+#Modify_button,
+#Extract_button,
+#reorganize_button {
+	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+#add_button:hover,
+#search_button:hover,
+#delete_button:hover,
+#Modify_button:hover,
+#Extract_button:hover,
+#reorganize_button:hover {
+	box-shadow: none;
+}
+
+#add_button {
+	background: #22c55e;
+	color: white;
+}
+
+#add_button:hover {
+	background: #16a34a;
+}
+
+#search_button {
+	background: #27272a;
+	color: white;
+}
+
+#search_button:hover {
+	background: #18181b;
+}
+
+#delete_button {
+	background: #ef4444;
+	color: white;
+}
+
+#delete_button:hover {
+	background: #dc2626;
+}
+
+#Modify_button {
+	background: #3b82f6;
+	color: white;
+}
+
+#Modify_button:hover {
+	background: #2563eb;
+}
+
+#Extract_button {
+	background: #8b5cf6;
+	color: white;
+}
+
+#Extract_button:hover {
+	background: #7c3aed;
+}
+
+#reorganize_button {
+	background: #f97316;
+	color: white;
+	margin-left: 10px;
+}
+
+#reorganize_button:hover {
+	background: #ea580c;
+}
+
+#labid,
+#labname,
+#labyear,
+#labclass,
+#labesfsd,
+#labeoop,
+#labeanalyse,
+#labalgebra,
+#labsearch_delete_id,
+#labextract_class {
+	color: #333;
+	font-weight: bold;
+	font-size: 18px;
+}
+
+#extract_class,
+#search_delete_id {
+	border-color: #a294f9;
+	background: white;
+}
