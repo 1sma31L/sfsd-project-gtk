@@ -2,7 +2,7 @@
  * @file
  * @brief This is the main file for the ENSTA Student Management System.
  * It contains the main menu and the implementation of the functions to manage students.
- * @authors BOUSSEKINE Mohamed Ismail, NACERI Rim Serine, FERKIOUI Akram, HARIZI Raouank, AMEDHKOUH Darine, HAMMOUTI Walid
+ * @authors BOUSSEKINE Mohamed Ismail, NACERI Rim Serine, FERKIOUI Akram, HARIZI Raounek Nour El Yakine, AMEDJKOUH Darine, HADJ Soundous, HAMMOUTI Walid
  * @date 2024-12-27
  */
 
@@ -37,7 +37,7 @@ typedef struct
 /**
  * @brief Procedure to add a student to the file
  * @author Akram
- * @bug Infinite loop when entering a non-integer value
+ * @bug None
  */
 void add_student();
 
@@ -48,7 +48,7 @@ void add_student();
  * @return A pointer to the student if found, NULL otherwise
  * @bug None
  */
-ENSTA_Student *student_exists(int id); // DONE by Ismail
+ENSTA_Student *student_exists(int id); 
 
 /**
  * @brief Procedure to search for a student by ID
@@ -72,7 +72,7 @@ void modify_student();
 void delete_student();
 
 /**
- * @brief Additional procedure sed in extract_by_class() to uppercase the class name (could be unnecessary?)
+ * @brief Procedure used in extract_by_class() & add_student() to uppercase the class name 
  * @author Serine
  * @param class The class name to extract students from
  * @bug None
@@ -253,7 +253,8 @@ void add_student()
 
   student.average = grade_average(student.grades);
   student.deleted = 0;
-
+  
+  // Write the student's information to the file
   fprintf(file, "%d;%s;%d;%s;", student.id, student.name, student.birthYear, student.class);
   for (int i = 0; i < NUM_MODULES; i++)
   {
@@ -268,7 +269,10 @@ void add_student()
 
 ENSTA_Student *student_exists(int id)
 {
+  // Declare a static variable to hold the student information
   static ENSTA_Student student;
+
+  // Open the file for reading
   FILE *file = fopen(FILE_NAME, "r");
   if (!file)
   {
@@ -276,11 +280,13 @@ ENSTA_Student *student_exists(int id)
     return NULL;
   }
 
+  // Read each student from the file and check if the ID matches
   while (fscanf(file, "%d;%[^;];%d;%[^;];%f,%*d;%f,%*d;%f,%*d;%f,%*d;%f;%d\n",
                 &student.id, student.name, &student.birthYear, student.class,
                 &student.grades[0], &student.grades[1], &student.grades[2], &student.grades[3],
                 &student.average, &student.deleted) == 10)
   {
+    // If the student's ID matches and they are not marked as deleted, return the student's address
     if (student.id == id && student.deleted == 0)
     {
       fclose(file);
@@ -288,13 +294,14 @@ ENSTA_Student *student_exists(int id)
     }
   }
 
-  fclose(file);
-  return NULL;
+  fclose(file); // Close the file if no match is found
+  return NULL; // Return NULL if the student is not found
 }
 
 void search_student()
 {
   int id;
+  // Prompt the user to enter the ID of the student to search
   printf("Enter the ID of the student to search: ");
   while (scanf("%d", &id) != 1)
   {
@@ -303,9 +310,12 @@ void search_student()
       ; // Clear invalid input from buffer
   }
 
+  // Check if the student exists using the student_exists function
   if (student_exists(id))
   {
     ENSTA_Student *found_student = student_exists(id);
+
+    // Print the found student's information
     printf("\nStudent Found:\n");
     printf("ID: %d, Name: %s, Birth Year: %d, Class: %s\n", found_student->id, found_student->name, found_student->birthYear, found_student->class);
     for (int i = 0; i < 4; i++)
@@ -322,6 +332,7 @@ void search_student()
 
 void modify_student()
 {
+  // Open the file for reading
   FILE *file = fopen(FILE_NAME, "r");
   if (!file)
   {
@@ -330,6 +341,7 @@ void modify_student()
   }
 
   int id;
+  // Prompt the user to enter the ID of the student to modify
   printf("Enter the ID of the student to modify: ");
   while (scanf("%d", &id) != 1)
   {
@@ -348,15 +360,17 @@ void modify_student()
                 &students[count].grades[0], &students[count].grades[1], &students[count].grades[2], &students[count].grades[3],
                 &students[count].average, &students[count].deleted) == 10)
   {
+    // Check if the current student matches the input ID and is not deleted
     if (students[count].id == id && students[count].deleted == 0)
     {
       found = 1;
-      // nnrmlmnt retun psq cbn l9inah
+      
     }
     count++;
   }
   fclose(file);
 
+  // If the student is not found, print a message and return
   if (!found)
   {
     printf("Student not found.\n");
@@ -383,12 +397,13 @@ void modify_student()
         scanf("%f", &students[i].grades[j]);
       }
 
+      // Recalculate the average after modifying grades
       students[i].average = grade_average(students[i].grades);
       break;
     }
   }
 
-  // Write all students back to the file
+  // Open the file for writing and save the modified student data
   file = fopen(FILE_NAME, "w");
   if (!file)
   {
@@ -396,6 +411,7 @@ void modify_student()
     return;
   }
 
+  // Write all students back to the file
   for (int i = 0; i < count; i++)
   {
     fprintf(file, "%d;%s;%d;%s;", students[i].id, students[i].name, students[i].birthYear, students[i].class);
@@ -411,9 +427,10 @@ void modify_student()
   fclose(file);
 }
 
-// delete_student bug fixed
+
 void delete_student()
 {
+  // Open the original file for reading and writing
   FILE *file = fopen(FILE_NAME, "r+");
   if (!file)
   {
@@ -490,7 +507,7 @@ void delete_student()
 
 void extract_by_class()
 {
-  // opening the file and checking for its existence
+  // Open the file and checking for its existence
   FILE *file = fopen(FILE_NAME, "r");
   if (!file)
   {
@@ -503,11 +520,11 @@ void extract_by_class()
   ENSTA_Student student[300];
   int match = 0;
 
-  // getting user input (class name)
+  // Prompt user for input (class name)
   printf("Enter the class name to extract (e.g., 3a, 3B): ");
   scanf("%s", classm);
 
-  // checking for class name validation
+  // Check for class name validation
   if (strlen(classm) != 2)
   {
     do
@@ -519,7 +536,7 @@ void extract_by_class()
   }
   uppercase(classm);
 
-  // scanning for class matches and simultaneously storing them in an array
+  // Scan for class matches and simultaneously Store them in an array
   while (fscanf(file, "%d;%[^;];%d;%[^;];%f,%*d;%f,%*d;%f,%*d;%f,%*d;%f;%d\n",
                 &student[match].id, student[match].name, &student[match].birthYear, student[match].class,
                 &student[match].grades[0],
@@ -530,7 +547,7 @@ void extract_by_class()
   {
     if (strcmp(student[match].class, classm) == 0 && student[match].deleted == 0)
     {
-      match++; // incrementing the match counter to store the next student with a matching class
+      match++; // Increment the match counter to store the next student with a matching class
     }
   }
 
@@ -542,23 +559,23 @@ void extract_by_class()
     return;
   }
 
-  // sorting students by their average in descending order
+  // Sort students by their average in descending order
   for (int i = 1; i < match; i++)
   {
-    ENSTA_Student pivot = student[i]; // picking the current student as the pivot (to compare to)
-    int j = i - 1;                    // setting the previous student from the sorted part of the array as the comparator
+    ENSTA_Student pivot = student[i]; // Pick the current student as the pivot (to compare to)
+    int j = i - 1;                    // Set the previous student from the sorted part of the array as the comparator
 
-    // moving the elements (student[0] .. student[j]) that have an average less than pivot.average one position to the right
+    // Move the elements (student[0] .. student[j]) that have an average less than pivot.average one position to the right
     while (j >= 0 && student[j].average < pivot.average)
     {
-      student[j + 1] = student[j]; // shifting student[j] to the right
-      j -= 1;                      // moving one position to left to keep comparing (in the sorted part of the array) until j = -1
+      student[j + 1] = student[j]; // Shift student[j] to the right
+      j -= 1;                      // Move one position to left to keep comparing (in the sorted part of the array) until j = -1
     }
 
-    student[j + 1] = pivot; // placing the pivot in its correct position withing the sorted part of the array
+    student[j + 1] = pivot; // Place the pivot in its correct position withing the sorted part of the array
   }
 
-  // printing the sorted students
+  // Print the sorted students
   printf("\nStudents in class %s sorted by average in decreasing order are:\n", classm);
   for (int i = 0; i < match; i++)
   {
@@ -568,17 +585,20 @@ void extract_by_class()
 
 void reorganize_file()
 {
-
+  // Open the original file for reading
   FILE *f = fopen(FILE_NAME, "r");
 
+  // Check if the file was opened successfully
   if (!f)
   {
     printf("ERROR:can't open the file %s", FILE_NAME);
     return;
   }
 
+  // Open a temporary file for writing
   FILE *tmp = fopen("tmp.txt", "w");
 
+   // Check if the temporary file was opened successfully
   if (!tmp)
   {
     printf("ERROR:can't open the file tmp.txt");
@@ -586,9 +606,13 @@ void reorganize_file()
     return;
   }
 
+  // Buffer to hold each line of student information
   char StudentInfo[120];
+
+  // Read each line from the original file
   while (fgets(StudentInfo, sizeof(StudentInfo), f))
   {
+    // Check if the second-to-last character is '0' (indicating not deleted)
     if (StudentInfo[strlen(StudentInfo) - 2] == '0')
     {
 
@@ -597,10 +621,14 @@ void reorganize_file()
   }
   fclose(f);
   fclose(tmp);
+
+  // Delete the original file
   if (remove(FILE_NAME) != 0)
   {
     printf("ERROR:can't delete the file %s", FILE_NAME);
   }
+
+  // Rename the temporary file to the original file name
   if (rename("tmp.txt", FILE_NAME) != 0)
   {
     perror("Error renaming the temporary file");
@@ -614,12 +642,16 @@ void reorganize_file()
 
 float grade_average(float grades[NUM_MODULES])
 {
+  // Initialize the sums
   float sum = 0;
   int sum_of_coefficients = 0;
+
+  // Loop through each module to calculate the weighted sum of grades and the total sum of coefficients
   for (int i = 0; i < NUM_MODULES; i++)
   {
     sum += grades[i] * MODULE_COEFFICIENTS[i];
     sum_of_coefficients += MODULE_COEFFICIENTS[i];
   }
+  // Return the average by dividing the weighted sum of grades by the sum of coefficients
   return sum / sum_of_coefficients;
 }
