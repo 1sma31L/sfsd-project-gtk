@@ -21,6 +21,7 @@ static void ok_clicked(GtkButton *button, gpointer user_data) {
     modified_student.birthYear = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widgets_modify[1]));
     strncpy(modified_student.class, gtk_entry_get_text(GTK_ENTRY(widgets_modify[2])), sizeof(modified_student.class) - 1);
     modified_student.class[sizeof(modified_student.class) - 1] = '\0';
+    uppercase(modified_student.class);
     modified_student.grades[0] = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widgets_modify[3]));
     modified_student.grades[1] = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widgets_modify[4]));
     modified_student.grades[2] = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widgets_modify[5]));
