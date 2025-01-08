@@ -1,5 +1,5 @@
 .vscode
 main
 ENSTA_Students.txt
-doc/*
-!doc/*.pdf
+doc/latex/*
+!doc/latex/refman.pdf
