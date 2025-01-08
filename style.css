@@ -1,19 +1,11 @@
 /* Window styling */
 
 /* General Window Styling */
-window {
-	background-color: #adefd1;
-	padding: 20px;
-	font-family: "Roboto", sans-serif;
-	color: #ffffff;
-}
 
 /* Grid Styling */
 grid {
 	padding: 10px;
-	background-color: #00305f;
-	border-radius: 10px;
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+	background-color: #f5efff;
 }
 
 button:hover {
@@ -26,30 +18,60 @@ button:hover {
 	font-size: 40px;
 	margin-bottom: 20px;
 	margin-left: 750px;
-	color: #adefd1;
+	color: #333;
 	font-weight: 600;
 }
 button {
 	border: none;
-	border-radius: 8px;
 	font-size: 20px;
-	color: #00203f;
-	background-color: #adefd1;
+	color: #6551e0;
+	background-color: #e5d9f2;
 	padding: 10px 20px;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-#add_button,
+#id,
+#full_name,
+#birth_year,
+#classe,
+#sfsd,
+#oop,
+#algebra,
+#analysis,
+#search_delete_student,
+#extract_student {
+	border-color: #a294f9;
+	background: white;
+}
+
+button:hover {
+	box-shadow: none;
+	color: #333;
+}
+
+button:disabled {
+	background: #f5efff;
+}
+
 #Modify_button,
 #search_button,
 #Extract_button,
-#reorganize_button,
+#reorganize_button {
+	color: #fff;
+	background: #a294f9;
+}
+
 #delete_button {
-	font-size: 20px;
-	background-color: #00203f;
-	color: rgba(154, 51, 51, 0.9);
-	margin-bottom: 10px;
-	font-weight: 600;
+	background: #e64b47;
+	color: white;
+}
+
+#add_button {
+	background: #43a047;
+	color: white;
+}
+
+#reorganize_button {
+	margin-left: 10px;
 }
 
 #labid,
@@ -62,8 +84,5 @@ button {
 #labalgebra,
 #labsearch_delete_id,
 #labextract_class {
-	font-size: 15px;
-	color: #f9ebde;
-	margin-bottom: 10px;
-	font-weight: bold;
+	color: #333;
 }
