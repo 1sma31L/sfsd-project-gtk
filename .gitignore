@@ -1,3 +1,5 @@
 .vscode
 main
 ENSTA_Students.txt
+doc/*
+!doc/*.pdf
