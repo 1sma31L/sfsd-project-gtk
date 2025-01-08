@@ -506,7 +506,7 @@ void extract_by_class()
 
   // variable declarations
   char classm[3];
-  ENSTA_Student student[100];
+  ENSTA_Student student[300];
   int match = 0;
 
   // getting user input (class name)
