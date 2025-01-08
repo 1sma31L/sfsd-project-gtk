@@ -1,6 +1,233 @@
 #include "functions.h"
 #include <gtk/gtk.h>
 
+
+static void ok_clicked(GtkButton *button, gpointer user_data) {
+
+    GtkWidget **widgets_modify = (GtkWidget **)user_data;
+    FILE *file = fopen(FILE_NAME, "r");
+  if (!file)
+  {
+    GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "Error: Could not open file!");
+    gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy(dialog);
+    return;
+  }
+  int id = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widgets_modify[7]));
+ // Retrieve the values when the user modifies the data
+    ENSTA_Student modified_student;
+    strncpy(modified_student.name, gtk_entry_get_text(GTK_ENTRY(widgets_modify[0])), sizeof(modified_student.name) - 1);
+    modified_student.name[sizeof(modified_student.name) - 1] = '\0';
+    modified_student.birthYear = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widgets_modify[1]));
+    strncpy(modified_student.class, gtk_entry_get_text(GTK_ENTRY(widgets_modify[2])), sizeof(modified_student.class) - 1);
+    modified_student.class[sizeof(modified_student.class) - 1] = '\0';
+    modified_student.grades[0] = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widgets_modify[3]));
+    modified_student.grades[1] = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widgets_modify[4]));
+    modified_student.grades[2] = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widgets_modify[5]));
+    modified_student.grades[3] = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widgets_modify[6]));
+    modified_student.average = (modified_student.grades[0] + modified_student.grades[1] + modified_student.grades[2] + modified_student.grades[3]) / 4;
+  
+  ENSTA_Student students[100];
+
+  int count = 0;
+  int found = 0;
+
+  // Read all students into memory
+  while (fscanf(file, "%d;%[^;];%d;%[^;];%f,%*d;%f,%*d;%f,%*d;%f,%*d;%f;%d\n",
+                &students[count].id, students[count].name, &students[count].birthYear, students[count].class,
+                &students[count].grades[0], &students[count].grades[1], &students[count].grades[2], &students[count].grades[3],
+                &students[count].average, &students[count].deleted) == 10)
+  {
+    if (students[count].id == id && students[count].deleted == 0)
+    {
+      found = 1;
+    }
+
+    count++;
+  }
+  fclose(file);
+
+
+  
+  // Modify the student
+  for (int i = 0; i < count; i++)
+  {
+    if (students[i].id == id && students[i].deleted == 0)
+    {
+      
+      strncpy(students[i].name, modified_student.name, sizeof(students[i].name) - 1);
+    students[i].name[sizeof(students[i].name)] = '\0';
+
+    strncpy(students[i].class, modified_student.class, sizeof(students[i].class) - 1);
+    students[i].class[sizeof(students[i].class) - 1] = '\0';
+
+      for (int j = 0; j < NUM_MODULES; j++)
+      {
+        students[i].grades[j]= modified_student.grades[j];
+      }
+      students[i].birthYear= modified_student.birthYear;
+      students[i].average = grade_average(students[i].grades);
+      break;
+    }
+  }
+
+  // Write all students back to the file
+  file = fopen(FILE_NAME, "w");
+  if (!file)
+  {
+    GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "Error: Could not open file!");
+    gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy(dialog);
+    return;
+  }
+
+  for (int i = 0; i < count; i++)
+  {
+    fprintf(file, "%d;%s;%d;%s;", students[i].id, students[i].name, students[i].birthYear, students[i].class);
+    for (int j = 0; j < NUM_MODULES; j++)
+    {
+      fprintf(file, "%.2f,%d;", students[i].grades[j], MODULE_COEFFICIENTS[j]);
+    }
+    fprintf(file, "%.2f;%d\n", students[i].average, students[i].deleted);
+  }
+
+
+  fclose(file);
+  gtk_widget_destroy(widgets_modify[8]);
+
+  GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "Student updated successfully!");
+  gtk_dialog_run(GTK_DIALOG(dialog));
+  gtk_widget_destroy(dialog);
+
+    return;
+
+}
+   
+
+
+static void modify_clicked(GtkButton *button, gpointer user_data) {
+
+  GtkWidget *widget8 = GTK_WIDGET(user_data);
+
+  FILE *file = fopen(FILE_NAME, "r");
+  if (!file)
+  {
+    GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "Error: Could not open file!");
+    gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy(dialog);
+    return;
+  }
+  int id = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widget8));
+
+  ENSTA_Student students[100];
+  int count = 0;
+  int found = 0;
+  int pos=0;
+
+  // Read all students into memory
+  while (fscanf(file, "%d;%[^;];%d;%[^;];%f,%*d;%f,%*d;%f,%*d;%f,%*d;%f;%d\n",
+                &students[count].id, students[count].name, &students[count].birthYear, students[count].class,
+                &students[count].grades[0], &students[count].grades[1], &students[count].grades[2], &students[count].grades[3],
+                &students[count].average, &students[count].deleted) == 10)
+  {
+    if (students[count].id == id && students[count].deleted == 0)
+    {
+      found = 1;
+      pos=count;
+      // nnrmlmnt retun psq cbn l9inah
+    }
+    count++;
+  }
+  fclose(file);
+
+  if (!found)
+  {
+        GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "Student not found");
+        gtk_dialog_run(GTK_DIALOG(dialog));
+        gtk_widget_destroy(dialog);
+        return;
+  }
+  GtkWidget *window2 = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+  char title[30];
+for (int i = 0; i < count; i++) {
+    if (students[i].id == id) {
+        snprintf(title, sizeof(title), "%s", students[i].name);  // Set the title to student's name
+        break;  // Exit the loop once the student is found
+    }
+}
+  char *title1 = g_strdup_printf("Modify  %s  Informations", title);
+
+  gtk_window_set_title(GTK_WINDOW(window2), title1);
+  gtk_window_set_default_size(GTK_WINDOW(window2), 400, 300);
+  gtk_window_set_position(GTK_WINDOW(window2), GTK_WIN_POS_CENTER);
+
+  GtkWidget *modify_grid = gtk_grid_new();
+  gtk_grid_set_row_spacing(GTK_GRID(modify_grid), 20);
+  gtk_container_add(GTK_CONTAINER(window2), modify_grid);
+
+  GtkWidget *modify_full_name = gtk_entry_new();
+  GtkWidget *modify_birth_year = gtk_spin_button_new_with_range(1990, 2020, 1);
+  GtkWidget *modify_class = gtk_entry_new();
+  GtkWidget *modify_sfsd = gtk_spin_button_new_with_range(0, 20.0, 0.5);
+  GtkWidget *modify_oop = gtk_spin_button_new_with_range(0, 20.0, 0.5);
+  GtkWidget *modify_analysis = gtk_spin_button_new_with_range(0, 20.0, 0.5);
+  GtkWidget *modify_algebra = gtk_spin_button_new_with_range(0, 20.0, 0.5);
+
+  gtk_grid_attach(GTK_GRID(modify_grid), modify_full_name, 1, 0, 1, 1);
+  gtk_grid_attach(GTK_GRID(modify_grid), modify_birth_year, 1, 1, 1, 1);
+  gtk_grid_attach(GTK_GRID(modify_grid), modify_class, 1, 2, 1, 1);
+  gtk_grid_attach(GTK_GRID(modify_grid), modify_sfsd, 1, 3, 1, 1);
+  gtk_grid_attach(GTK_GRID(modify_grid), modify_oop, 1, 4, 1, 1);
+  gtk_grid_attach(GTK_GRID(modify_grid), modify_analysis, 1, 5, 1, 1);
+  gtk_grid_attach(GTK_GRID(modify_grid), modify_algebra, 1, 6, 1, 1);
+
+
+  GtkWidget *modify_labname = gtk_label_new("Enter the Full Name:");
+  GtkWidget *modify_labyear = gtk_label_new("Enter the Birth Year:");
+  GtkWidget *modify_labclass = gtk_label_new("Enter the Class:");
+  GtkWidget *modify_labesfsd = gtk_label_new("Enter the SFSD Grade:");
+  GtkWidget *modify_labeoop = gtk_label_new("Enter the OOP Grade:");
+  GtkWidget *modify_labeanalyse = gtk_label_new("Enter the Analysis Grade:");
+  GtkWidget *modify_labalgebra = gtk_label_new("Enter the Algebra Grade:");
+
+  gtk_grid_attach(GTK_GRID(modify_grid), modify_labname, 0, 0, 1, 1);
+  gtk_grid_attach(GTK_GRID(modify_grid), modify_labyear, 0, 1, 1, 1);
+  gtk_grid_attach(GTK_GRID(modify_grid), modify_labclass, 0, 2, 1, 1);
+  gtk_grid_attach(GTK_GRID(modify_grid), modify_labesfsd, 0, 3, 1, 1);
+  gtk_grid_attach(GTK_GRID(modify_grid), modify_labeoop, 0, 4, 1, 1);
+  gtk_grid_attach(GTK_GRID(modify_grid), modify_labeanalyse, 0, 5, 1, 1);
+  gtk_grid_attach(GTK_GRID(modify_grid), modify_labalgebra, 0, 6, 1, 1);
+
+  // Retrieve the values;
+    // Initialize fields with the current student's data
+    gtk_entry_set_text(GTK_ENTRY(modify_full_name), students[pos].name);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(modify_birth_year), students[pos].birthYear);
+    gtk_entry_set_text(GTK_ENTRY(modify_class), students[pos].class);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(modify_sfsd), students[pos].grades[0]);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(modify_oop), students[pos].grades[1]);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(modify_analysis), students[pos].grades[2]);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(modify_algebra), students[pos].grades[3]);
+
+    GtkWidget **widgets_modify = malloc(9 * sizeof(GtkWidget *));
+    widgets_modify[0] = GTK_WIDGET(modify_full_name);
+    widgets_modify[1] = GTK_WIDGET(modify_birth_year);
+    widgets_modify[2] = GTK_WIDGET(modify_class);
+    widgets_modify[3] = GTK_WIDGET(modify_sfsd);
+    widgets_modify[4] = GTK_WIDGET(modify_oop);
+    widgets_modify[5] = GTK_WIDGET(modify_analysis);
+    widgets_modify[6] = GTK_WIDGET(modify_algebra);
+    widgets_modify[7] = widget8;
+    widgets_modify[8] = GTK_WIDGET(window2);
+
+
+
+  GtkWidget* ok_modify_button = gtk_button_new_with_label("OK");
+  gtk_grid_attach(GTK_GRID(modify_grid), ok_modify_button, 0, 7, 1, 1);
+  g_signal_connect(ok_modify_button, "clicked", G_CALLBACK(ok_clicked),widgets_modify);
+
+  gtk_widget_show_all(window2);
+
+}
 static void extract_clicked(GtkButton *button, gpointer user_data) {
   GtkWidget *widget9 = GTK_WIDGET(user_data);
 
@@ -19,6 +246,13 @@ static void extract_clicked(GtkButton *button, gpointer user_data) {
 
   strncpy(classm, gtk_entry_get_text(GTK_ENTRY(widget9)), sizeof(classm) - 1);
   classm[sizeof(classm) - 1] = '\0';
+  if (classm[0] == '\0')
+  {
+    GtkWidget *dialog = gtk_message_dialog_new(NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR, GTK_BUTTONS_OK, "Error: Enter the class");
+    gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy(dialog);
+    return;
+  }
   uppercase(classm);
 
   while (fscanf(file, "%d;%[^;];%d;%[^;];%f,%*d;%f,%*d;%f,%*d;%f,%*d;%f;%d\n",
@@ -87,7 +321,6 @@ static void delete_clicked(GtkButton *button, gpointer user_data){
     
   GtkWidget *widget8 = GTK_WIDGET(user_data);
 
-  int id = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widget8));
   FILE *file = fopen(FILE_NAME, "r+");
   if (!file)
   {
@@ -96,6 +329,8 @@ static void delete_clicked(GtkButton *button, gpointer user_data){
     gtk_widget_destroy(dialog);      
     return;
   }
+  int id = gtk_spin_button_get_value(GTK_SPIN_BUTTON(widget8));
+
   int valid_id = 0;    // Flag for existing ID
   ENSTA_Student student;
   while (fscanf(file, "%d;%[^;];%d;%[^;];%f,%*d;%f,%*d;%f,%*d;%f,%*d;%f;%d\n",
@@ -601,6 +836,10 @@ static void activate(GtkApplication *app, gpointer user_data)
     g_signal_connect(delete_button, "clicked", G_CALLBACK(delete_clicked),widgets[8]);
     g_signal_connect(reorganize_button, "clicked", G_CALLBACK(reorganize_clicked),NULL);
     g_signal_connect(Extract_button, "clicked", G_CALLBACK(extract_clicked),widgets[9]);
+    g_signal_connect(Modify_button, "clicked", G_CALLBACK(modify_clicked),widgets[8]);
+
+  
+
 
 
 
