@@ -1,28 +1,26 @@
 grid {
 	padding: 10px;
-	background-color: #264653;
-	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+	background-color: #f5efff;
 }
 
 #label {
 	margin-left: 650px;
 	margin-top: 10px;
 	font-size: 50px;
-	color: #ffffff;
+	color: #333;
 	font-weight: bold;
 }
 
 button {
 	border: none;
 	font-size: 20px;
-	color: #264653;
-	background-color: #b6e6f9;
+	color: #6551e0;
+	background-color: #e5d9f2;
 	padding: 10px 20px;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 button:hover {
-	background-color: #488ea9;
+	background-color: #a294f9;
 	box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -36,7 +34,7 @@ button:hover {
 #analysis,
 #search_delete_student,
 #extract_student {
-	border-color: #052b39;
+	border-color: #a294f9;
 	background: white;
 }
 
@@ -46,7 +44,7 @@ button:hover {
 }
 
 button:disabled {
-	background: #b6e6f9;
+	background: #f5efff;
 }
 
 #add_button,
@@ -68,58 +66,58 @@ button:disabled {
 }
 
 #add_button {
-	background: #287271;
+	background: #22c55e;
 	color: white;
 }
 
 #add_button:hover {
-	background: #024a49;
+	background: #16a34a;
 }
 
 #search_button {
-	background: #2a9d8f;
+	background: #27272a;
 	color: white;
 }
 
 #search_button:hover {
-	background: #01463e;
+	background: #18181b;
 }
 
 #delete_button {
-	background: #8AB17D;
+	background: #ef4444;
 	color: white;
 }
 
 #delete_button:hover {
-	background: #478e2f;
+	background: #dc2626;
 }
 
 #Modify_button {
-	background: #E9C46A;
+	background: #3b82f6;
 	color: white;
 }
 
 #Modify_button:hover {
-	background: #a87d10;
+	background: #2563eb;
 }
 
 #Extract_button {
-	background: #F4A261;
+	background: #8b5cf6;
 	color: white;
 }
 
 #Extract_button:hover {
-	background: #a85919;
+	background: #7c3aed;
 }
 
 #reorganize_button {
-	background: #E76F51;
+	background: #f97316;
 	color: white;
 	margin-left: 10px;
 }
 
 #reorganize_button:hover {
-	background: #be3513;
+	background: #ea580c;
 }
 
 #labid,
@@ -132,13 +130,13 @@ button:disabled {
 #labalgebra,
 #labsearch_delete_id,
 #labextract_class {
-	color: #ffffff;
+	color: #333;
 	font-weight: bold;
 	font-size: 18px;
 }
 
 #extract_class,
 #search_delete_id {
-	border-color: #052b39;
+	border-color: #a294f9;
 	background: white;
 }
