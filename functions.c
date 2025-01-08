@@ -19,6 +19,8 @@
 const char *MODULE_NAMES[] = {"SFSD", "OOP", "Mathematical Analysis", "Linear Algebra"};
 const int MODULE_COEFFICIENTS[] = {4, 3, 5, 2};
 
+// HELLO
+
 /**
  * @struct ENSTA_Student
  * @brief Structure representing a student.
