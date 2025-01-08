@@ -25,9 +25,8 @@ button:hover {
 #label{
 	font-size: 40px;
 	margin-bottom: 20px;
-	margin-left: 200px ;
+	margin-left: 750px ;
 	color: #ADEFD1;
-    margin-left: 80px;
 }
 button {
 	border: none;
@@ -37,6 +36,11 @@ button {
 	background-color:  #ADEFD1;
 	padding: 10px 20px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+#add_button, #Modify_button, #search_button, #Extract_button, #reorganize_button, #delete_button {
+	font-size: 20px;
+	color: rgba(0, 0, 0, 0.9);
+	margin-bottom: 10px;
 }
 
 #labid, #labname, #labyear, #labclass, #labesfsd, #labeoop, #labeanalyse, #labalgebra, #labsearch_delete_id, #labextract_class {
