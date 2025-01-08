@@ -617,6 +617,7 @@ static void activate(GtkApplication *app, gpointer user_data)
   window = gtk_application_window_new(app);
   gtk_window_set_title(GTK_WINDOW(window), "STUDENT MANAGEMENT SYSTEM");
   gtk_window_set_default_size(GTK_WINDOW(window), 1000, 800);
+
   // Get screen dimensions using the newer GdkDisplay API
   GdkDisplay *display = gdk_display_get_default();
   GdkMonitor *monitor = gdk_display_get_primary_monitor(display); // Primary monitor
