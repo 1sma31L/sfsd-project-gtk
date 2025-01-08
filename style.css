@@ -1,32 +1,27 @@
-/* Window styling */
-
-/* General Window Styling */
-
-/* Grid Styling */
 grid {
 	padding: 10px;
 	background-color: #f5efff;
 }
 
-button:hover {
-	background-color: #ffffff;
-	box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
-}
-/* Main Title Label */
-
 #label {
-	font-size: 40px;
-	margin-bottom: 20px;
-	margin-left: 750px;
+	margin-left: 650px;
+	margin-top: 10px;
+	font-size: 50px;
 	color: #333;
-	font-weight: 600;
+	font-weight: bold;
 }
+
 button {
 	border: none;
 	font-size: 20px;
 	color: #6551e0;
 	background-color: #e5d9f2;
 	padding: 10px 20px;
+}
+
+button:hover {
+	background-color: #a294f9;
+	box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
 }
 
 #id,
@@ -52,9 +47,22 @@ button:disabled {
 	background: #f5efff;
 }
 
+#add_button,
+#search_button,
+#delete_button,
+#Modify_button,
+#Extract_button,
 #reorganize_button {
-	color: #fff;
-	background: #a294f9;
+	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+#add_button:hover,
+#search_button:hover,
+#delete_button:hover,
+#Modify_button:hover,
+#Extract_button:hover,
+#reorganize_button:hover {
+	box-shadow: none;
 }
 
 #add_button {
@@ -126,6 +134,7 @@ button:disabled {
 	font-weight: bold;
 	font-size: 18px;
 }
+
 #extract_class,
 #search_delete_id {
 	border-color: #a294f9;
